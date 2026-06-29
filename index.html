@@ -160,6 +160,39 @@
   .toast.show{display:flex;opacity:1;transform:translateX(-50%) translateY(0)}
   .toast button{background:none;border:none;color:var(--gold);font-weight:700;cursor:pointer;font-size:13px;padding:2px}
   .toast button:hover{text-decoration:underline}
+  /* guide */
+  .guide-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+  .guide-tabs button{padding:8px 14px;border-radius:9px;background:var(--surface);border:1px solid var(--line2);color:var(--muted);font-size:13px;font-weight:600}
+  .guide-tabs button:hover{color:var(--text);border-color:rgba(202,162,108,.5)}
+  .guide-tabs button.on{background:var(--surface2);color:var(--cream);border-color:var(--gold)}
+  .guide-steps{display:flex;flex-direction:column;gap:0}
+  .guide-step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .guide-step:last-child{border-bottom:none}
+  .gs-num{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-family:'Fraunces';font-weight:800;font-size:15px;color:var(--gold);flex:none;margin-top:2px}
+  .gs-body{flex:1}
+  .gs-title{font-family:'Fraunces';font-weight:700;font-size:16px;color:var(--cream);margin-bottom:6px}
+  .gs-text{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .guide-cols{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .gcol{padding:6px 11px;border-radius:8px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .gcol span{font-size:10.5px;font-weight:400;opacity:.8}
+  .gcol.must{background:var(--green-dim);color:var(--green)}
+  .gcol.nice{background:rgba(210,163,95,.14);color:var(--gold)}
+  .guide-step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .guide-step:last-child{border-bottom:none}
+  .gs-num{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-family:'Fraunces';font-weight:800;font-size:15px;color:var(--gold);flex:none;margin-top:2px}
+  .gs-body{flex:1}
+  .gs-title{font-family:'Fraunces';font-weight:700;font-size:16px;color:var(--cream);margin-bottom:6px}
+  .gs-text{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .guide-cols{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .gcol{padding:6px 11px;border-radius:8px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .gcol span{font-size:10.5px;font-weight:400;opacity:.8}
+  .gcol.must{background:var(--green-dim);color:var(--green)}
+  .gcol.nice{background:rgba(210,163,95,.14);color:var(--gold)}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+  .gallery-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .15s}
+  .gallery-card:hover{border-color:var(--line2)}
+  .gallery-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--bg2)}
+  .gallery-meta{display:flex;align-items:center;gap:7px;padding:8px 10px 4px;flex-wrap:wrap}
   .bulkbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface2);border:1px solid var(--line2);
     border-radius:11px;padding:10px 14px;margin-bottom:12px}
   .bulkbar-count{font-size:13px;color:var(--cream);font-weight:600;margin-right:4px}
@@ -178,6 +211,7 @@
 
   /* journal + playbook cards */
   .jp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .jp-grid.wide{grid-template-columns:repeat(3,1fr)}
   .jcard{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:border-color .15s}
   .jcard:hover{border-color:var(--line2)}
   .jcard .jh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
@@ -333,6 +367,8 @@
     <div class="hbtns">
       <button class="btn icon" id="exportBtn" title="Export CSV">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Export</button>
+      <button class="btn icon" id="guideBtn" title="Import guide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>Guide</button>
       <button class="btn icon" id="settingsBtn" title="Settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
       <button class="btn primary icon" id="addBtn">
@@ -347,6 +383,7 @@
     <button data-view="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Journal</button>
     <button data-view="playbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Playbook</button>
     <button data-view="notebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4a2 2 0 012-2h10l4 4v14a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>Notebook</button>
+    <button data-view="mistakes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Mistakes</button>
   </div>
 
   <div id="subbar"></div>
@@ -538,7 +575,7 @@
 <div class="overlay" id="pasteOverlay"><div class="modal">
   <div class="modal-h"><h2>Paste Trade Data</h2>
     <button class="iconbtn" id="closePaste"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
-  <span class="hint" style="display:block;margin-bottom:10px">Copy your TradingView <b>Order History</b> table (or a Crema CSV export) and paste it below — header row included. Works with tab- or comma-separated data.</span>
+  <span class="hint" style="display:block;margin-bottom:10px">Copy your TradingView <b>Order History</b> table (or a Crema CSV export) and paste it below — header row included. Works with tab- or comma-separated data. <button onclick="$('pasteOverlay').classList.remove('open');openGuide('export')" style="background:none;border:none;color:var(--gold);font-weight:600;cursor:pointer;font-size:12px;padding:0">Not sure how? See the guide →</button></span>
   <textarea id="paste_text" rows="12" placeholder="Symbol	Side	Qty	Fill Price	Closing Time&#10;BTCUSD	Buy	0.5	64200	2026-05-01 09:35:00&#10;…" style="font-family:'JetBrains Mono',monospace;font-size:12px"></textarea>
   <div class="modal-foot"><button class="btn" id="cancelPaste">Cancel</button><button class="btn primary" id="parsePaste">Parse &amp; Import</button></div>
 </div></div>
@@ -562,6 +599,138 @@
   <div id="viewsList" class="tm-list"></div>
 </div></div>
 
+<!-- Guide Modal -->
+<div class="overlay" id="guideOverlay"><div class="modal wide">
+  <div class="modal-h"><h2>How to import from TradingView</h2>
+    <button class="iconbtn" id="closeGuide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+
+  <div class="guide-tabs" id="guideTabs">
+    <button class="on" data-gtab="export">1 · Export from TradingView</button>
+    <button data-gtab="import">2 · Import into Crema</button>
+    <button data-gtab="tips">3 · Tips &amp; troubleshooting</button>
+  </div>
+
+  <div id="guideExport">
+    <div class="guide-steps">
+      <div class="guide-step">
+        <div class="gs-num">1</div>
+        <div class="gs-body">
+          <div class="gs-title">Open TradingView Paper Trading</div>
+          <div class="gs-text">At the bottom of any chart, click your broker name (it shows "Paper trading" if you're in paper mode). The trading panel opens at the bottom of your screen.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">2</div>
+        <div class="gs-body">
+          <div class="gs-title">Go to the History tab</div>
+          <div class="gs-text">Inside the trading panel, click the <b>History</b> tab (sometimes called "Order History"). You'll see a list of all your past fills.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">3</div>
+        <div class="gs-body">
+          <div class="gs-title">Select the right columns</div>
+          <div class="gs-text">Click the <b>⋯ three-dots button</b> on the right side of the History tab header. Make sure these columns are <b>checked</b>:</div>
+          <div class="guide-cols">
+            <div class="gcol must">Symbol <span>required</span></div>
+            <div class="gcol must">Side <span>required</span></div>
+            <div class="gcol must">Qty <span>required</span></div>
+            <div class="gcol must">Fill Price <span>required</span></div>
+            <div class="gcol must">Closing Time <span>required</span></div>
+            <div class="gcol nice">Type <span>auto-detects SL/TP ✓</span></div>
+            <div class="gcol nice">Commission <span>optional</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">4</div>
+        <div class="gs-body">
+          <div class="gs-title">Export the file</div>
+          <div class="gs-text">Click <b>"Export data…"</b> — you'll find it in the same ⋯ menu, or as a download icon. A CSV file downloads to your computer automatically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="guideImport" style="display:none">
+    <div class="guide-steps">
+      <div class="guide-step">
+        <div class="gs-num">1</div>
+        <div class="gs-body">
+          <div class="gs-title">Open the import flow</div>
+          <div class="gs-text">Click <b>Log Trade</b> (top right) and then <b>Import CSV</b> at the bottom of the form. Or go to <b>Settings → Import CSV</b>. Or click <b>Paste data</b> to skip the file entirely.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">2</div>
+        <div class="gs-body">
+          <div class="gs-title">Choose your file (or paste)</div>
+          <div class="gs-text">Select the CSV file you just downloaded. Crema reads the columns automatically.<br><br><b>Paste shortcut:</b> in TradingView's History tab, select all rows (Ctrl+A or Cmd+A), copy (Ctrl+C / Cmd+C), then use Crema's <b>Paste data</b> button and paste directly — no file needed.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">3</div>
+        <div class="gs-body">
+          <div class="gs-title">Crema pairs your fills into trades</div>
+          <div class="gs-text">TradingView exports individual buy/sell fills, not finished trades. Crema matches them up using FIFO — each buy is paired with the next sell for that symbol, building a complete trade with entry, exit, P&amp;L and hold time.<br><br>If you included the <b>Type</b> column: stop-order exits are auto-tagged as your stop loss price, limit-order exits as your take profit. R-multiples calculate automatically.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">4</div>
+        <div class="gs-body">
+          <div class="gs-title">Confirm and review</div>
+          <div class="gs-text">A summary shows how many fills became how many trades, and whether any positions are still open (those are skipped — export again when closed). Confirm to add them. Re-importing the same file won't create duplicates.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="guideTips" style="display:none">
+    <div class="guide-steps">
+      <div class="guide-step">
+        <div class="gs-num">💡</div>
+        <div class="gs-body">
+          <div class="gs-title">Add the "Type" column for automatic SL/TP detection</div>
+          <div class="gs-text">This is the most important tip. When TradingView exports a bracket order that hit its stop, the closing fill has Type = "Stop". When it hit the target, Type = "Limit". Crema uses this to auto-fill the stop loss and take profit prices — which means R-multiples are calculated automatically on import, no editing required.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">💡</div>
+        <div class="gs-body">
+          <div class="gs-title">Include "Closing Time" for hold-time analytics</div>
+          <div class="gs-text">Without timestamps, the hour×day heatmap, hold-time breakdown, and time-of-day report won't have data. Always include Closing Time when exporting.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">⚠</div>
+        <div class="gs-body">
+          <div class="gs-title">"No trades found" after importing</div>
+          <div class="gs-text">This usually means your positions are still open in TradingView — Crema only imports completed round-trips. Close your trades, then export and import again. Or the Qty/Side/Fill Price columns weren't selected.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">⚠</div>
+        <div class="gs-body">
+          <div class="gs-title">Unknown column format (column mapper appears)</div>
+          <div class="gs-text">If Crema opens the column mapper, your broker's CSV uses non-standard header names. Use the dropdowns to tell Crema which column is Symbol, Entry, Exit, etc. This works with any broker — MT4, Tradovate, NinjaTrader and others.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="gs-num">⚠</div>
+        <div class="gs-body">
+          <div class="gs-title">Trades are in wrong direction (long instead of short)</div>
+          <div class="gs-text">This can happen if the Closing Time column is missing — Crema can't sort fills chronologically and may pair them backwards. Always include Closing Time. If it still happens, open the trade and flip the direction with the Edit button.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-foot" style="justify-content:space-between;align-items:center">
+    <span class="hint">After importing, add Setup, Grade and notes to each trade for full analytics.</span>
+    <button class="btn primary" id="guideImportBtn">Import CSV now</button>
+  </div>
+</div></div>
+
 <!-- Tag Manager Modal -->
 <div class="overlay" id="tagOverlay"><div class="modal">
   <div class="modal-h"><h2>Manage Tags</h2>
@@ -578,7 +747,16 @@
   <div class="settings-row">
     <div class="field"><label>Theme</label><div class="switch" id="s_theme"><button data-theme="dark">Dark roast</button><button data-theme="light">Light cream</button></div></div>
     <div class="field"><label>Currency symbol</label><input type="text" id="s_currency" maxlength="3" placeholder="$"><span class="hint">Used when displaying profit and loss.</span></div>
+    <div class="field"><label>Contract multipliers <span style="color:var(--muted2)">(futures)</span></label>
+      <textarea id="s_multipliers" rows="3" placeholder="ES=50, NQ=20, MNQ=2, CL=1000"></textarea>
+      <span class="hint">One per line or comma-separated. Overrides built-in defaults (ES, MES, NQ, MNQ, YM, CL, GC etc. are pre-loaded). Leave blank to use defaults only.</span></div>
     <div class="field"><label>Tags</label><button class="btn icon" id="manageTagsBtn" style="align-self:flex-start">Manage tags &amp; groups</button></div>
+    <div class="field"><label>Help</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn icon" id="settingsGuideBtn">Import guide</button>
+      </div>
+      <span class="hint" style="margin-top:6px;display:block"><b>Keyboard shortcuts:</b> N = New trade · / = Search · D = Dashboard · T = Trades · R = Reports · J = Journal · P = Playbook · M = Mistakes · Esc = Close</span>
+    </div>
     <div class="field"><label>Import trades</label>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn icon" id="importBtn">Import CSV</button>
@@ -606,7 +784,7 @@ function makeStore(){
 const store=makeStore();
 const K_TRADES='tj:trades',K_SETTINGS='tj:settings',K_JOURNAL='tj:journal',K_PB='tj:playbook',K_NOTES='tj:notes',K_MILESTONES='tj:milestones';
 
-let trades=[],settings={currency:'$',goals:{},acctSize:null},journal={},playbook=[],notes=[],milestones=[];
+let trades=[],settings={currency:'$',goals:{},acctSize:null,multipliers:{}},journal={},playbook=[],notes=[],milestones=[];
 let editingId=null,chart=null,filters={symbol:'',setup:'',direction:'',result:'',tag:'',account:'',context:''},calRef=null,view='dashboard',curShot=null;
 let range={mode:'all',from:'',to:''},sortBy='date',sortDir=-1,calView='month';
 let compareOn=false,rangeB={mode:'30',from:'',to:''};
@@ -632,7 +810,9 @@ function cls(n){return n>0?'pos':n<0?'neg':'neu';}
 function fmtDur(ms){if(ms==null)return '—';const m=Math.round(ms/60000);if(m<1)return '<1m';if(m<60)return m+'m';const h=Math.floor(m/60),mm=m%60;if(h<24)return h+'h'+(mm?' '+mm+'m':'');const d=Math.floor(h/24),hh=h%24;return d+'d'+(hh?' '+hh+'h':'');}
 
 /* ---------- trade math ---------- */
-function pnlOf(t){if(t.entry==null||t.exit==null||t.size==null)return 0;const dir=t.direction==='short'?-1:1;return (t.exit-t.entry)*dir*t.size-(t.fees||0);}
+const DEFAULT_MULTIPLIERS={ES:50,MES:5,NQ:20,MNQ:2,YM:5,MYM:0.5,RTY:50,M2K:5,CL:1000,GC:100,SI:5000,ZB:1000,ZN:1000,ZF:1000,ZT:2000,NG:10000,HG:25000};
+function getMultiplier(sym){const s=(sym||'').split(':').pop().toUpperCase().replace(/[0-9!]/g,'');return (settings.multipliers&&settings.multipliers[s])||DEFAULT_MULTIPLIERS[s]||1;}
+function pnlOf(t){if(t.entry==null||t.exit==null||t.size==null)return 0;const dir=t.direction==='short'?-1:1;return (t.exit-t.entry)*dir*t.size*getMultiplier(t.symbol)-(t.fees||0);}
 function riskOf(t){if(t.stop==null||t.entry==null||t.size==null)return null;const r=Math.abs(t.entry-t.stop)*t.size;return r>0?r:null;}
 function rMultiple(t){const risk=riskOf(t);if(!risk)return null;return pnlOf(t)/risk;}
 function plannedRR(t){if(t.stop==null||t.tp==null||t.entry==null)return null;const risk=Math.abs(t.entry-t.stop),rew=Math.abs(t.tp-t.entry);return risk>0?rew/risk:null;}
@@ -758,6 +938,7 @@ function filterToDate(date){range={mode:'custom',from:date,to:date};setView('tra
 function render(){
   renderSubbar();
   if(view==='notebook'){renderNotebook();return;}
+  if(view==='mistakes'){renderMistakes();return;}
   if(view==='journal'){renderJournal();return;}
   if(view==='playbook'){renderPlaybook();return;}
   if(trades.length===0){renderEmpty();return;}
@@ -875,7 +1056,15 @@ function buildInsights(list){
     }
   }
   const sevOrder={warn:0,good:1,neutral:2};
-  return insights.sort((a,b)=>sevOrder[a.sev]-sevOrder[b.sev]).slice(0,5);
+  // Best hour from heatmap
+  const hgrid=hourDowGrid(list);const hcells=Object.values(hgrid).filter(c=>c.n>=3);
+  if(hcells.length>=3){const best=hcells.reduce((a,b)=>b.net>a.net?b:a,hcells[0]);const worst=hcells.reduce((a,b)=>b.net<a.net?b:a,hcells[0]);
+    if(best.net>0)insights.push({sev:'good',text:`Your most profitable hour is ${String(best.hr).padStart(2,'0')}:00 — ${money(best.net,0)} net across ${best.n} trades.`});
+    if(worst.net<0)insights.push({sev:'warn',text:`${String(worst.hr).padStart(2,'0')}:00 is your worst hour: ${money(worst.net,0)} net across ${worst.n} trades. Consider avoiding it.`});}
+  // Futures multiplier reminder
+  const noMult=list.filter(t=>getMultiplier(t.symbol)===1&&!t.symbol.match(/USD|EUR|GBP|BTC|ETH|XAU|XAG/i)&&t.symbol.length<=6&&!/[.\/]/.test(t.symbol));
+  if(noMult.length>=3){const syms=[...new Set(noMult.map(t=>t.symbol))].slice(0,3);insights.push({sev:'neutral',text:`Possible futures symbols without a multiplier: ${syms.join(', ')}. Set contract multipliers in Settings if P&L looks wrong.`});}
+  return insights.sort((a,b)=>({warn:0,good:1,neutral:2}[a.sev]||2)-({warn:0,good:1,neutral:2}[b.sev]||2)).slice(0,6);
 }
 /* ---------- mistakes card ---------- */
 function mistakesCard(list){
@@ -1033,7 +1222,7 @@ function kpi(lbl,val,sub,accent,valcls){return `<div class="kpi" style="--accent
 function srow(l,v){return `<div class="srow"><span class="s-l">${l}</span><span class="s-v">${v}</span></div>`;}
 
 /* ---------- trades ---------- */
-let selectedTradeIds=new Set();
+let selectedTradeIds=new Set(),galleryMode=false;
 function renderTrades(){
   const list=sortTrades(visibleTrades());
   const allTags=[...new Set(trades.flatMap(t=>String(t.tags||'').split(',').map(x=>x.trim()).filter(Boolean)))];
@@ -1046,14 +1235,17 @@ function renderTrades(){
       ${selectFilterFixed('direction','All sides',[['long','Long'],['short','Short']])}
       ${selectFilterFixed('result','All results',[['win','Wins'],['loss','Losses'],['be','Breakeven']])}
       ${selectFilterFixed('context','All contexts',[['Trending','Trending'],['Ranging','Ranging'],['News','News'],['Choppy','Choppy'],['Opening range','Opening range'],['Post-news','Post-news']])}
-      <button class="btn sm icon" id="viewsBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Views</button></div>
+      <button class="btn sm icon" id="viewsBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Views</button>
+      <button class="btn sm icon${galleryMode?' primary':''}" id="galleryBtn" title="Screenshot gallery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button></div>
     <div id="bulkBarSlot">${bulkBarHTML()}</div>
-    <div class="tablecard"><div class="tscroll"><table>
+    ${galleryMode?galleryHTML(list):`<div class="tablecard"><div class="tscroll"><table>
       <thead><tr><th class="l" style="width:30px"><input type="checkbox" id="selectAllRows"></th>${th('Date','date','l')}${th('Symbol','symbol','l')}<th class="l">Side</th><th>Entry</th><th>Exit</th><th>Stop</th>${th('Size','size')}<th>R:R</th>${th('Result','r')}${th('P&L','pnl')}${th('Grade','grade')}<th class="l">Setup</th><th></th></tr></thead>
-      <tbody>${list.map(rowHtml).join('')}</tbody></table></div></div>`;
+      <tbody>${list.map(rowHtml).join('')}</tbody></table></div></div>`}`;
   bindFilters();bindRowActions();
   document.querySelectorAll('thead th[data-sort]').forEach(h=>h.onclick=()=>{const k=h.dataset.sort;if(sortBy===k)sortDir*=-1;else{sortBy=k;sortDir=(k==='symbol'||k==='grade')?1:-1;}render();});
-  $('viewsBtn').onclick=openViews;
+  if($('viewsBtn'))$('viewsBtn').onclick=openViews;
+  if($('galleryBtn'))$('galleryBtn').onclick=()=>{galleryMode=!galleryMode;render();};
+  if(galleryMode){document.querySelectorAll('[data-gopen]').forEach(c=>c.onclick=()=>openDetail(c.dataset.gopen));return;}
   const selectAll=$('selectAllRows');
   selectAll.checked=list.length>0&&list.every(t=>selectedTradeIds.has(t.id));
   selectAll.onchange=()=>{
@@ -1107,6 +1299,19 @@ function bindBulkBar(){
     showUndoToast(`${deleted.length} trade(s) deleted`,async()=>{trades=trades.concat(deleted);await saveTrades();render();});
   };
   $('bulkClearBtn').onclick=()=>{selectedTradeIds.clear();render();};
+}
+function galleryHTML(list){
+  const withShots=[...list].reverse().filter(t=>t.shot);
+  if(!withShots.length)return `<div class="tablecard"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.5 4h-5L7 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><h3>No screenshots yet</h3><p>Attach a chart screenshot when logging a trade and it will appear here for visual review.</p></div></div>`;
+  return `<div class="gallery-grid">${withShots.map(t=>{const p=pnlOf(t);return `<div class="gallery-card" data-gopen="${t.id}">
+    <img src="${t.shot}" class="gallery-img" loading="lazy">
+    <div class="gallery-meta">
+      <span class="sym">${esc(t.symbol)}</span>
+      <span class="pill ${t.direction}" style="font-size:10px">${t.direction}</span>
+      <span class="mono ${cls(p)}" style="font-weight:700;margin-left:auto">${moneyShort(p)}</span>
+    </div>
+    <div style="font-size:11px;color:var(--muted2);padding:0 10px 8px">${t.date||''}${t.setup?' · '+esc(t.setup):''}</div>
+  </div>`;}).join('')}</div>`;
 }
 function sortTrades(list){const val=t=>{switch(sortBy){case 'pnl':return pnlOf(t);case 'r':{const r=rMultiple(t);return r==null?-1e9:r;}case 'symbol':return (t.symbol||'').toLowerCase();case 'grade':return t.grade||'~';case 'size':return t.size||0;default:return t.date||'';}};
   return [...list].sort((a,b)=>{const x=val(a),y=val(b);if(x<y)return sortDir<0?1:-1;if(x>y)return sortDir<0?-1:1;return (b.created||0)-(a.created||0);});}
@@ -1329,7 +1534,9 @@ function renderPlaybook(){
     const tr=trades.filter(t=>(t.setup||'').toLowerCase()===p.name.toLowerCase());
     const s=computeStats(tr);
     const rules=(p.rules||[]).filter(Boolean).map(r=>`<li>${esc(r)}</li>`).join('');
-    return `<div class="jcard" data-pb="${i}"><div class="jh"><span class="jdate" style="font-family:'Fraunces';font-size:16px">${esc(p.name)}</span><span class="tag" style="color:var(--muted2)">${tr.length} trades</span></div>
+    return `<div class="jcard" data-pb="${i}"><div class="jh"><span class="jdate" style="font-family:'Fraunces';font-size:16px">${esc(p.name)}</span>
+      <span style="display:flex;align-items:center;gap:8px"><span class="tag" style="color:var(--muted2)">${tr.length} trades</span>
+      <button class="btn sm primary" data-quicklog="${i}" onclick="event.stopPropagation();quickLogSetup(${i})">+ Log trade</button></span></div>
       ${p.desc?`<div class="jtext">${esc(p.desc)}</div>`:''}
       ${rules?`<ul class="pb-rules">${rules}</ul>`:''}
       <div class="pb-stats">
@@ -1347,6 +1554,7 @@ function renderPlaybook(){
   document.querySelectorAll('[data-pb]').forEach(c=>c.onclick=()=>openPb(+c.dataset.pb));
 }
 let pbIdx=null;
+function quickLogSetup(i){const p=playbook[i];if(!p)return;openTrade();setTimeout(()=>{$('f_setup').value=p.name;renderRulesChecklist();},50);}
 function openPb(i){pbIdx=(i==null?null:i);const p=i==null?null:playbook[i];
   $('pbTitle').textContent=p?'Edit Setup':'Playbook Setup';
   $('pb_name').value=p?p.name:'';$('pb_desc').value=p?p.desc:'';$('pb_rules').value=p?(p.rules||[]).join('\n'):'';
@@ -1357,6 +1565,118 @@ async function savePbEntry(){const name=$('pb_name').value.trim();if(!name){aler
 async function deletePbEntry(){if(pbIdx!=null&&confirm('Delete this setup?')){const deleted=playbook[pbIdx],idx=pbIdx;playbook.splice(pbIdx,1);await savePb();$('pbOverlay').classList.remove('open');render();
   showUndoToast('Playbook setup deleted',async()=>{playbook.splice(idx,0,deleted);await savePb();render();});
 }}
+
+/* ---------- mistakes tab ---------- */
+function renderMistakes(){
+  const list=visibleTrades();
+  const grp=settings.tagGroups||{};
+
+  // All trades that have either mistake tags or a filled mistakes text field
+  const taggedMistakes=list.filter(t=>String(t.tags||'').split(',').map(x=>x.trim()).some(tag=>grp[tag]==='mistake'));
+  const notedMistakes=list.filter(t=>t.mistakes&&t.mistakes.trim());
+  const allMistakeTrades=[...new Set([...taggedMistakes,...notedMistakes].map(t=>t.id))].map(id=>list.find(t=>t.id===id)).filter(Boolean);
+  const sorted=[...allMistakeTrades].sort((a,b)=>(b.date||'')<(a.date||'')?-1:1);
+
+  // Cost by tag
+  const mc=mistakesCost(list);
+
+  // Total metrics
+  const totalCost=mc.totalCost;
+  const avgCostPerMistakeTrade=allMistakeTrades.length?allMistakeTrades.reduce((a,t)=>a+pnlOf(t),0)/allMistakeTrades.length:0;
+  const pctWithMistakes=list.length?(allMistakeTrades.length/list.length*100):0;
+
+  // Monthly trend: mistakes per month
+  const byMonth={};allMistakeTrades.forEach(t=>{if(!t.date)return;const m=t.date.slice(0,7);const o=byMonth[m]||(byMonth[m]={month:m,n:0,cost:0});o.n++;o.cost+=pnlOf(t);});
+  const monthTrend=Object.values(byMonth).sort((a,b)=>a.month<b.month?-1:1);
+
+  if(!allMistakeTrades.length){
+    $('app').innerHTML=`<div class="tablecard"><div class="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <h3>No mistakes logged yet</h3>
+      <p>Log a trade and fill in the <b>Mistakes / lessons</b> field, or tag a trade with a "mistake" group in the Tag Manager. Crema will track exactly what they're costing you.</p>
+      <div class="row"><button class="btn primary" onclick="openTrade()">Log a trade</button><button class="btn" onclick="openSettings()">Tag Manager</button></div>
+    </div></div>`;
+    return;
+  }
+
+  const maxTagAbs=mc.byTag.length?Math.max(1,...mc.byTag.map(r=>Math.abs(r.net))):1;
+  const tagRows=mc.byTag.length?mc.byTag.map(r=>{
+    const barColor=r.net<0?'#dd7d5e':'#aecd7a';
+    const w=Math.abs(r.net)/maxTagAbs*100;
+    return `<div class="bd-row">
+      <div class="bd-name" title="${esc(r.tag)}">${esc(r.tag)}</div>
+      <div class="bd-bar"><i style="width:${w.toFixed(1)}%;background:${barColor}"></i></div>
+      <div class="bd-meta"><span class="mono ${r.net<0?'neg':'pos'}">${moneyShort(r.net)}</span><span class="bd-sub">${r.n}t</span></div>
+    </div>`;}).join(''):`<div class="bd-empty">Tag trades as "mistake" in the Tag Manager to see cost by type.</div>`;
+
+  const trendRows=monthTrend.map(m=>`
+    <div class="srow">
+      <span class="s-l mono">${m.month}</span>
+      <span style="display:flex;align-items:center;gap:16px">
+        <span style="color:var(--muted);font-size:12.5px">${m.n} trade${m.n>1?'s':''}</span>
+        <span class="s-v ${cls(m.cost)}">${money(m.cost,0)}</span>
+      </span>
+    </div>`).join('');
+
+  // Lessons from mistakes field — unique, non-empty
+  const lessons=sorted.filter(t=>t.mistakes&&t.mistakes.trim()).map(t=>({
+    id:t.id,date:t.date,symbol:t.symbol,lesson:t.mistakes.trim(),pnl:pnlOf(t)
+  }));
+
+  $('app').innerHTML=`
+    <div class="kpis r5" style="margin-bottom:14px">
+      ${kpi('Total cost',money(totalCost,0),'from tagged mistakes','var(--red)','neg')}
+      ${kpi('Trades affected',String(allMistakeTrades.length),(pctWithMistakes.toFixed(0)+'% of all trades'),'var(--gold)','')}
+      ${kpi('Avg per trade',money(avgCostPerMistakeTrade,0),'on trades w/ mistakes','var(--red)',avgCostPerMistakeTrade<0?'neg':'pos')}
+      ${kpi('Mistake types',String(mc.byTag.length),'distinct tagged mistakes','var(--muted2)','')}
+      ${kpi('With notes',String(notedMistakes.length),'trades w/ written lessons','var(--caramel)','')}
+    </div>
+
+    <div class="panels" style="margin-bottom:14px">
+      <div class="card">
+        <div class="card-h"><h3>Cost by mistake type</h3><span class="tag">tag trades as "mistake" in Tag Manager</span></div>
+        <div class="bd">${tagRows}</div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Monthly trend</h3><span class="tag">${monthTrend.length} month${monthTrend.length!==1?'s':''}</span></div>
+        <div class="stat-rows">${trendRows||'<div class="bd-empty">Not enough data yet.</div>'}</div>
+      </div>
+    </div>
+
+    ${lessons.length?`
+    <div class="toolbar" style="margin-top:0"><span class="t-title">Lessons Learned</span><span class="tag" style="color:var(--muted2)">${lessons.length} entries</span></div>
+    <div class="jp-grid" style="margin-bottom:14px">
+      ${lessons.map(l=>`<div class="jcard" data-open-trade="${l.id}">
+        <div class="jh"><span class="jdate" style="font-family:'JetBrains Mono'">${l.date||'—'} · <span class="sym">${esc(l.symbol||'—')}</span></span>
+        <span class="mono ${cls(l.pnl)}">${moneyShort(l.pnl)}</span></div>
+        <div class="jtext">${esc(l.lesson)}</div>
+      </div>`).join('')}
+    </div>`:''}
+
+    <div class="toolbar" style="margin-top:0"><span class="t-title">All Mistake Trades</span><span class="tag" style="color:var(--muted2)">${sorted.length} trades</span></div>
+    <div class="tablecard"><div class="tscroll"><table>
+      <thead><tr>
+        <th class="l">Date</th><th class="l">Symbol</th><th class="l">Side</th>
+        <th>P&L</th><th class="l">Mistake tags</th><th class="l">Notes</th>
+      </tr></thead>
+      <tbody>${sorted.map(t=>{
+        const p=pnlOf(t);
+        const mTags=String(t.tags||'').split(',').map(x=>x.trim()).filter(tag=>grp[tag]==='mistake');
+        return `<tr data-open="${t.id}" style="cursor:pointer">
+          <td class="l" style="color:var(--muted)">${t.date||'—'}</td>
+          <td class="l"><span class="sym">${esc(t.symbol||'—')}</span></td>
+          <td class="l"><span class="pill ${t.direction}">${t.direction}</span></td>
+          <td class="${cls(p)}" style="font-weight:700">${money(p)}</td>
+          <td class="l">${mTags.map(tag=>`<span class="setup-tag" style="color:var(--red)">${esc(tag)}</span>`).join(' ')}</td>
+          <td class="l" style="color:var(--muted);max-width:300px;overflow:hidden;text-overflow:ellipsis">${esc((t.mistakes||'').slice(0,80))}${(t.mistakes||'').length>80?'…':''}</td>
+        </tr>`;}).join('')}
+      </tbody>
+    </table></div></div>`;
+
+  // clicking a trade row or lesson card opens detail
+  document.querySelectorAll('tr[data-open]').forEach(tr=>tr.onclick=()=>openDetail(tr.dataset.open));
+  document.querySelectorAll('[data-open-trade]').forEach(c=>c.onclick=()=>openDetail(c.dataset.openTrade));
+}
 
 /* ---------- notebook ---------- */
 const NOTE_TEMPLATES={
@@ -1558,8 +1878,10 @@ async function saveTrade(){const t=readForm();
   await saveTrades();closeTrade();render();}
 
 /* ---------- settings ---------- */
-function openSettings(){$('s_currency').value=settings.currency;document.querySelectorAll('#s_theme button').forEach(b=>b.classList.toggle('on',(settings.theme||'dark')===b.dataset.theme));$('settingsOverlay').classList.add('open');}
-async function saveSettingsForm(){settings.currency=$('s_currency').value.trim()||'$';await saveSettings();$('settingsOverlay').classList.remove('open');render();}
+function multiplierStr(m){return Object.entries(m||{}).map(([k,v])=>k+'='+v).join(', ');}
+function parseMultipliers(s){const m={};s.split(/[,\n]+/).forEach(p=>{const[k,v]=p.trim().split('=');if(k&&v){const n=parseFloat(v);if(!isNaN(n))m[k.trim().toUpperCase()]=n;}});return m;}
+function openSettings(){$('s_currency').value=settings.currency;$('s_multipliers').value=multiplierStr(settings.multipliers);document.querySelectorAll('#s_theme button').forEach(b=>b.classList.toggle('on',(settings.theme||'dark')===b.dataset.theme));$('settingsOverlay').classList.add('open');}
+async function saveSettingsForm(){settings.currency=$('s_currency').value.trim()||'$';settings.multipliers=parseMultipliers($('s_multipliers').value);await saveSettings();$('settingsOverlay').classList.remove('open');render();}
 function mfeR(t){const risk=riskOf(t);let fav=null;if(t.direction==='short'){if(t.lo!=null)fav=(t.entry-t.lo)*t.size;}else{if(t.hi!=null)fav=(t.hi-t.entry)*t.size;}if(fav==null||fav<0)fav=fav==null?null:Math.max(0,fav);return {usd:fav,r:(fav!=null&&risk)?fav/risk:null};}
 function maeR(t){const risk=riskOf(t);let adv=null;if(t.direction==='short'){if(t.hi!=null)adv=(t.hi-t.entry)*t.size;}else{if(t.lo!=null)adv=(t.entry-t.lo)*t.size;}if(adv==null)return {usd:null,r:null};adv=Math.max(0,adv);return {usd:adv,r:risk?adv/risk:null};}
 function applyTheme(){document.body.classList.toggle('light',settings.theme==='light');}
@@ -1607,17 +1929,28 @@ function detectDelim(text){const first=text.split('\n')[0]||'';const tabs=(first
 const cleanNum=v=>{if(v==null)return null;const n=parseFloat(String(v).replace(/[^0-9.\-]/g,''));return isNaN(n)?null:n;};
 const dateOnly=v=>{const m=String(v||'').match(/(\d{4}-\d{2}-\d{2})/);if(m)return m[1];const d=new Date(v);return isNaN(d.getTime())?new Date().toISOString().slice(0,10):d.toISOString().slice(0,10);};
 const tstamp=v=>{const t=Date.parse(v);return isNaN(t)?null:t;};
-function sigOf(t){return [t.symbol,t.entryTime||'',t.exitTime||'',t.size,t.entry,t.exit].join('|');}
-async function commitImport(newTrades,msg){const seen=new Set(trades.map(sigOf));const add=newTrades.filter(t=>!seen.has(sigOf(t)));
-  if(add.length===0){alert('No new trades to import — these look like they were already imported.');return;}
-  if(!confirm(msg.replace('{n}',add.length)+(add.length<newTrades.length?`\n(${newTrades.length-add.length} duplicate(s) will be skipped.)`:'')))return;
-  trades=trades.concat(add);await saveTrades();$('settingsOverlay').classList.remove('open');$('tradeOverlay').classList.remove('open');$('pasteOverlay').classList.remove('open');render();}
+function sigOf(t){return [(t.symbol||''),(t.date||'').slice(0,10),Math.round(t.entry||0),Math.round((t.size||0)*100),(t.direction||'')].join('|');}
+function sigOfExact(t){return [t.symbol,t.entryTime||'',t.exitTime||'',t.size,t.entry,t.exit].join('|');}
+async function commitImport(newTrades,msg){
+  const seen=new Set(trades.map(sigOf));
+  const add=newTrades.filter(t=>!seen.has(sigOf(t)));
+  if(add.length===0){alert('No new trades to import — these look like they were already imported (fuzzy match on symbol, date, entry, size and direction).');return;}
+  if(!confirm(msg.replace('{n}',add.length)+(add.length<newTrades.length?`\n(${newTrades.length-add.length} duplicate(s) skipped.)`:'')))return;
+  trades=trades.concat(add);
+  await saveTrades();$('settingsOverlay').classList.remove('open');$('tradeOverlay').classList.remove('open');$('pasteOverlay').classList.remove('open');render();
+}
 function routeImportRows(rows){
   if(rows.length<2){alert('That data looks empty — make sure you included the header row.');return;}
   const header=rows[0].map(h=>h.trim().toLowerCase());const col=(...names)=>{for(const n of names){const i=header.indexOf(n);if(i>=0)return i;}return -1;};const data=rows.slice(1);
   if(col('entry','entry price')>=0&&col('exit','exit price')>=0){importCompleted(data,col);return;}
   const cSide=col('side','action','b/s','buy/sell','direction'),cPrice=col('fill price','price','avg fill price','avg price','exec price','executed price','fillprice','execution price'),cSym=col('symbol','instrument','ticker','contract','market','product'),cQty=col('qty','quantity','size','filled qty','volume','lots','contracts','amount','filled');
-  if(cSide>=0&&cPrice>=0&&cSym>=0&&cQty>=0){importFills(data,{cSym,cSide,cQty,cPrice,cTime:col('closing time','time','date','fill time','datetime','transaction time','date/time','open time'),cComm:col('commission','fee','fees','commissions'),cStatus:col('status')});return;}
+  if(cSide>=0&&cPrice>=0&&cSym>=0&&cQty>=0){importFills(data,{cSym,cSide,cQty,cPrice,
+    cTime:col('closing time','time','date','fill time','datetime','transaction time','date/time','open time'),
+    cComm:col('commission','fee','fees','commissions'),
+    cStatus:col('status'),
+    cType:col('type','order type','order_type','exec type','execution type','order kind','kind'),
+    cStopPx:col('stop price','stop px','stoppx','trigger price','stop_price'),
+    cLimitPx:col('limit price','limit px','limitpx','target price','limit_price')});return;}
   // Unknown format — open the column mapper
   openColumnMapper(rows);
 }
@@ -1685,24 +2018,60 @@ function importCompleted(data,col){const g=(row,i)=>i>=0?(row[i]||''):'';
     const dir=String(g(row,cDir)).toLowerCase().startsWith('s')?'short':'long';
     out.push({id:'i'+Date.now()+'_'+k,created:Date.now()+k,date:dateOnly(g(row,cDate)),symbol:sym,direction:dir,entry,exit,stop:cleanNum(g(row,cStop)),tp:cleanNum(g(row,cTp)),size,fees:cleanNum(g(row,cFees))||0,setup:String(g(row,cSetup)).trim(),notes:String(g(row,cNotes)).trim(),tags:String(g(row,cTags)).trim(),grade:String(g(row,cGrade)).trim(),account:String(g(row,cAcct)).trim()});});
   if(!out.length){alert('Found entry/exit columns but no valid trade rows.');return;}commitImport(out,'Found {n} completed trades in this CSV.\n\nImport them?');}
+function mergeSameExitTrades(out){
+  const groups={};
+  out.forEach(t=>{const key=t.symbol+'|'+t.direction+'|'+(t.exitTime||t.date)+'|'+t.exit;(groups[key]=groups[key]||[]).push(t);});
+  const merged=[];
+  Object.values(groups).forEach(group=>{
+    if(group.length===1){merged.push(group[0]);return;}
+    const totalSize=group.reduce((a,t)=>a+t.size,0);
+    const avgEntry=group.reduce((a,t)=>a+t.entry*t.size,0)/totalSize;
+    const totalFees=group.reduce((a,t)=>a+(t.fees||0),0);
+    merged.push({...group[0],entry:+avgEntry.toFixed(8),size:totalSize,fees:+totalFees.toFixed(6)});});
+  return merged.sort((a,b)=>(a.date||'')<(b.date||'')?-1:1);
+}
 function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(row[i]||''):'';
   if(ix.cStatus>=0){const st=get(ix.cStatus).toLowerCase();if(st&&st.indexOf('fill')<0)return null;}
   const side=get(ix.cSide).trim().toLowerCase();const sideN=side.startsWith('b')?'buy':side.startsWith('s')?'sell':null;
   const qty=cleanNum(get(ix.cQty)),price=cleanNum(get(ix.cPrice));if(!sideN||!qty||price==null)return null;const time=ix.cTime>=0?get(ix.cTime):'';
-  return {sym:get(ix.cSym).split(':').pop().trim().toUpperCase(),side:sideN,qty:Math.abs(qty),price,comm:Math.abs(cleanNum(get(ix.cComm))||0),time,ord:k,ts:tstamp(time)};}).filter(Boolean);
+  const type=(ix.cType>=0?get(ix.cType):'').toLowerCase().trim();
+  const stopPx=ix.cStopPx>=0?cleanNum(get(ix.cStopPx)):null;
+  const limitPx=ix.cLimitPx>=0?cleanNum(get(ix.cLimitPx)):null;
+  return {sym:get(ix.cSym).split(':').pop().trim().toUpperCase(),side:sideN,qty:Math.abs(qty),price,comm:Math.abs(cleanNum(get(ix.cComm))||0),time,ord:k,ts:tstamp(time),type,stopPx,limitPx};}).filter(Boolean);
   if(!fills.length){alert('No filled orders found in that file.');return;}
   const hasTs=fills.some(f=>f.ts!=null);if(hasTs)fills.sort((a,b)=>(a.ts??0)-(b.ts??0)||a.ord-b.ord);else fills.reverse();
-  const books={},out=[];let openCount=0;
+  const hasTypes=fills.some(f=>f.type);
+  const hasStopPx=fills.some(f=>f.stopPx!=null);
+  const books={},out=[];
   fills.forEach(f=>{const lots=books[f.sym]||(books[f.sym]=[]);const commPU=f.comm/f.qty;
-    if(!lots.length||lots[0].side===f.side){lots.push({side:f.side,qtyRem:f.qty,price:f.price,time:f.time,commPU});return;}
+    if(!lots.length||lots[0].side===f.side){lots.push({side:f.side,qtyRem:f.qty,price:f.price,time:f.time,commPU,type:f.type,stopPx:f.stopPx,limitPx:f.limitPx});return;}
+    const isStop=f.type&&(f.type.includes('stop')&&!f.type.includes('limit'));
+    const isLimit=f.type&&(f.type.includes('limit')||f.type.includes('take'));
     let rem=f.qty;while(rem>1e-12&&lots.length&&lots[0].side!==f.side){const lot=lots[0],m=Math.min(rem,lot.qtyRem);const dir=lot.side==='buy'?'long':'short';
-      out.push({id:'i'+Date.now()+'_'+out.length,created:Date.now()+out.length,date:dateOnly(f.time||lot.time),symbol:f.sym,direction:dir,entry:lot.price,exit:f.price,stop:null,tp:null,size:m,fees:+(m*lot.commPU+m*commPU).toFixed(6),setup:'',notes:'',tags:'',grade:'',entryTime:lot.time,exitTime:f.time});
+      // Prefer explicit stop/limit price columns; fall back to type-based fill price detection
+      const autoStop=isStop?(f.stopPx??f.price):null;
+      const autoTp=isLimit?(f.limitPx??f.price):null;
+      out.push({id:'i'+Date.now()+'_'+out.length,created:Date.now()+out.length,date:dateOnly(f.time||lot.time),
+        symbol:f.sym,direction:dir,entry:lot.price,exit:f.price,stop:autoStop,tp:autoTp,
+        size:m,fees:+(m*lot.commPU+m*commPU).toFixed(6),setup:'',notes:'',tags:'',grade:'',
+        entryTime:lot.time,exitTime:f.time});
       lot.qtyRem-=m;rem-=m;if(lot.qtyRem<=1e-9)lots.shift();}
-    if(rem>1e-12)lots.push({side:f.side,qtyRem:rem,price:f.price,time:f.time,commPU});});
-  Object.values(books).forEach(l=>openCount+=l.length);
-  if(!out.length){alert('Found '+fills.length+' fills but no completed round-trip trades — positions may still be open.');return;}
-  let msg='Detected a TradingView order-history export.\n\n\u2022 '+fills.length+' fills \u2192 {n} completed trades';if(openCount)msg+='\n\u2022 '+openCount+' position(s) still open (skipped)';
-  msg+="\n\nNote: TradingView history has no stop-loss, so R-multiple stays blank for these. Edit a trade later to add its stop.\n\nImport now?";commitImport(out,msg);}
+    if(rem>1e-12)lots.push({side:f.side,qtyRem:rem,price:f.price,time:f.time,commPU,type:f.type,stopPx:f.stopPx,limitPx:f.limitPx});});
+  // collect open positions
+  const openSymbols=Object.entries(books).filter(([,lots])=>lots.length>0).map(([sym])=>sym);
+  if(!out.length){
+    const openMsg=openSymbols.length?'\n\nOpen positions (still in TradingView): '+openSymbols.join(', ')+'\nClose them and re-export to import.':'';
+    alert('Found '+fills.length+' fills but no completed round-trip trades.'+openMsg);return;}
+  // scale-in merge: combine fills that share the same exit into one trade with averaged entry
+  const scaledOut=mergeSameExitTrades(out);
+  const mergedCount=out.length-scaledOut.length;
+  const slTpDetected=scaledOut.filter(t=>t.stop!=null||t.tp!=null).length;
+  let msg='Detected a TradingView order-history export.\n\n• '+fills.length+' fills → {n} completed trades';
+  if(mergedCount>0)msg+='\n• '+mergedCount+' scale-in group(s) merged into averaged entries ✓';
+  if(openSymbols.length)msg+='\n• Still open (skipped): '+openSymbols.join(', ');
+  if(hasTypes&&slTpDetected>0)msg+='\n• '+slTpDetected+' trade(s) had SL/TP auto-detected from order type ✓';
+  else if(!hasTypes)msg+='\n\nTip: include the "Type" column to auto-detect stop-loss and take-profit prices.';
+  msg+='\n\nImport now?';commitImport(scaledOut,msg);}
 
 /* ---------- samples ---------- */
 async function seedSamples(){const base=Date.now()-12*864e5;
@@ -1716,6 +2085,21 @@ $('addBtn').onclick=()=>openTrade();
 $('closeTrade').onclick=closeTrade;$('cancelTrade').onclick=closeTrade;$('saveTrade').onclick=saveTrade;
 $('settingsBtn').onclick=openSettings;$('closeSettings').onclick=()=>$('settingsOverlay').classList.remove('open');$('saveSettings').onclick=saveSettingsForm;
 $('exportBtn').onclick=exportCSV;$('backupBtn').onclick=backup;
+$('guideBtn').onclick=()=>openGuide('export');
+$('closeGuide').onclick=()=>$('guideOverlay').classList.remove('open');
+$('guideImportBtn').onclick=()=>{$('guideOverlay').classList.remove('open');$('importFile').click();};
+document.querySelectorAll('#guideTabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#guideTabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ['guideExport','guideImport','guideTips'].forEach(id=>$(id).style.display='none');
+  $('guide'+b.dataset.gtab.charAt(0).toUpperCase()+b.dataset.gtab.slice(1)).style.display='block';
+});
+function openGuide(tab='export'){
+  document.querySelectorAll('#guideTabs button').forEach(b=>b.classList.toggle('on',b.dataset.gtab===tab));
+  ['guideExport','guideImport','guideTips'].forEach(id=>$(id).style.display='none');
+  $('guide'+tab.charAt(0).toUpperCase()+tab.slice(1)).style.display='block';
+  $('guideOverlay').classList.add('open');
+}
 $('restoreBtn').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=e=>{if(e.target.files[0])restore(e.target.files[0]);e.target.value='';};
 $('importBtn').onclick=()=>$('importFile').click();$('importInModal').onclick=()=>{closeTrade();$('importFile').click();};
 $('pasteBtn').onclick=()=>{$('settingsOverlay').classList.remove('open');openPaste();};
@@ -1770,6 +2154,7 @@ $('detailDelete').onclick=async()=>{if(detailId&&confirm('Delete this trade?')){
 $('detailShare').onclick=()=>shareTradeImage(detailId);
 document.querySelectorAll('#s_theme button').forEach(b=>b.onclick=async()=>{settings.theme=b.dataset.theme;applyTheme();document.querySelectorAll('#s_theme button').forEach(x=>x.classList.toggle('on',x===b));await saveSettings();});
 $('manageTagsBtn').onclick=openTags;
+$('settingsGuideBtn').onclick=()=>{$('settingsOverlay').classList.remove('open');openGuide('export');};
 $('closeTags').onclick=()=>$('tagOverlay').classList.remove('open');$('cancelTags').onclick=()=>$('tagOverlay').classList.remove('open');$('saveTags').onclick=saveTagsForm;
 $('tagOverlay').addEventListener('click',e=>{if(e.target===$('tagOverlay'))$('tagOverlay').classList.remove('open');});
 $('closeJournal').onclick=()=>$('journalOverlay').classList.remove('open');$('cancelJournal').onclick=()=>$('journalOverlay').classList.remove('open');
@@ -1791,8 +2176,19 @@ $('saveNote').onclick=saveNoteEntry;$('n_delete').onclick=deleteNoteEntry;
 $('n_tpl').onchange=e=>{const t=NOTE_TEMPLATES[e.target.value];if(t){const cur=$('n_body').value;$('n_body').value=cur?cur+'\n'+t:t;}e.target.value='';};
 // lightbox
 $('lightbox').onclick=()=>$('lightbox').classList.remove('open');
-[$('tradeOverlay'),$('settingsOverlay'),$('detailOverlay'),$('journalOverlay'),$('pbOverlay'),$('calcOverlay'),$('goalsOverlay'),$('noteOverlay'),$('pasteOverlay'),$('searchOverlay'),$('viewsOverlay'),$('msOverlay'),$('mapOverlay')].forEach(o=>{if(o)o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));$('lightbox').classList.remove('open');}});
+[$('tradeOverlay'),$('settingsOverlay'),$('detailOverlay'),$('journalOverlay'),$('pbOverlay'),$('calcOverlay'),$('goalsOverlay'),$('noteOverlay'),$('pasteOverlay'),$('searchOverlay'),$('viewsOverlay'),$('msOverlay'),$('mapOverlay'),$('guideOverlay')].forEach(o=>{if(o)o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));$('lightbox').classList.remove('open');return;}
+  if(e.target.matches('input,textarea,select'))return;
+  if(e.key==='n'||e.key==='N'){openTrade();return;}
+  if(e.key==='/'){ e.preventDefault();openSearch();return;}
+  if(e.key==='d'||e.key==='D'){setView('dashboard');return;}
+  if(e.key==='t'||e.key==='T'){if(trades.length)setView('trades');return;}
+  if(e.key==='r'||e.key==='R'){if(trades.length)setView('reports');return;}
+  if(e.key==='j'||e.key==='J'){setView('journal');return;}
+  if(e.key==='p'||e.key==='P'){setView('playbook');return;}
+  if(e.key==='m'||e.key==='M'){setView('mistakes');return;}
+});
 
 (async function init(){await loadAll();applyTheme();render();})();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
