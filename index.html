@@ -539,6 +539,7 @@
   <div class="modal-foot"><button class="btn danger" id="n_delete" style="margin-right:auto;display:none">Delete</button><button class="btn" id="cancelNote">Cancel</button><button class="btn primary" id="saveNote">Save Note</button></div>
 </div></div>
 
+<div class="overlay" id="dialogOverlay" style="align-items:center;justify-content:center"><div class="modal" style="max-width:420px;padding:26px"><div class="modal-h" style="margin-bottom:12px"><h2 id="dialogTitle" style="font-size:18px">Notice</h2><div id="dialogIcon" style="font-size:22px"></div></div><div id="dialogBody" style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:18px;white-space:pre-wrap"></div><div id="dialogInput" style="display:none;margin-bottom:14px"><input type="text" id="dialogInputVal" style="width:100%;font-size:14px"><span class="hint" id="dialogInputHint" style="margin-top:6px;display:block"></span></div><div class="modal-foot" id="dialogFoot"></div></div></div>
 <div class="lightbox" id="lightbox"><img id="lightboxImg"></div>
 <div class="toast" id="undoToast"></div>
 
@@ -791,6 +792,22 @@ let compareOn=false,rangeB={mode:'30',from:'',to:''};
 
 /* ---------- helpers ---------- */
 const $=id=>document.getElementById(id);
+
+function _showDialog(opts){return new Promise(resolve=>{
+  var title=opts.title||'Notice',body=opts.body||'',icon=opts.icon||'',buttons=opts.buttons,input=opts.input||false;
+  $('dialogTitle').textContent=title;$('dialogBody').textContent=body;$('dialogIcon').textContent=icon;
+  var inp=$('dialogInput');inp.style.display=input?'block':'none';
+  if(input){$('dialogInputVal').value=opts.inputVal||'';$('dialogInputHint').textContent=opts.inputHint||'';setTimeout(function(){$('dialogInputVal').focus();},60);}
+  $('dialogFoot').innerHTML=buttons.map(function(b,i){return '<button class="btn'+(b.primary?' primary':'')+(b.danger?' danger':'')+'" data-di="'+i+'">'+String(b.label)+'</button>';}).join('');
+  document.querySelectorAll('[data-di]').forEach(function(el){el.onclick=function(){$('dialogOverlay').classList.remove('open');resolve(buttons[+el.dataset.di].value);};});
+  $('dialogOverlay').classList.add('open');
+});}
+function crAlert(msg,title,icon){return _showDialog({title:title||'Notice',body:msg,icon:icon||'',buttons:[{label:'OK',primary:true,value:undefined}]});}
+function crConfirm(msg,title,icon){return _showDialog({title:title||'Confirm',body:msg,icon:icon||'',buttons:[{label:'Cancel',value:false},{label:'Confirm',primary:true,value:true}]});}
+function crConfirmDelete(msg,title){return _showDialog({title:title||'Delete',body:msg,icon:'',buttons:[{label:'Cancel',value:false},{label:'Delete',danger:true,value:true}]});}
+function crPrompt(msg,hint,val,title){
+  return _showDialog({title:title||'Input',body:msg,input:true,inputHint:hint||'',inputVal:val||'',buttons:[{label:'Cancel',value:null},{label:'OK',primary:true,value:'__IN__'}]})
+    .then(function(r){return r==='__IN__'?($('dialogInputVal').value.trim()||null):null;});}
 const num=v=>{const n=parseFloat(v);return isNaN(n)?null:n;};
 const cur=()=>settings.currency||'$';
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -828,7 +845,7 @@ async function loadAll(){
   try{const nn=await store.get(K_NOTES);if(nn&&nn.value)notes=JSON.parse(nn.value);}catch(e){notes=[];}
   try{const mm=await store.get(K_MILESTONES);if(mm&&mm.value)milestones=JSON.parse(mm.value);}catch(e){milestones=[];}
 }
-async function saveTrades(){try{await store.set(K_TRADES,JSON.stringify(trades));}catch(e){console.error(e);alert('Could not save — storage may be full (large screenshots use a lot of space).');}}
+async function saveTrades(){try{await store.set(K_TRADES,JSON.stringify(trades));}catch(e){console.error(e);await crAlert('Could not save — storage may be full (large screenshots use a lot of space).');}}
 async function saveSettings(){try{await store.set(K_SETTINGS,JSON.stringify(settings));}catch(e){}}
 async function saveJournal(){try{await store.set(K_JOURNAL,JSON.stringify(journal));}catch(e){}}
 async function savePb(){try{await store.set(K_PB,JSON.stringify(playbook));}catch(e){}}
@@ -1179,7 +1196,7 @@ function renderDashboard(){
   if($('editGoals'))$('editGoals').onclick=openGoals;
   $('addMilestoneBtn').onclick=()=>openMilestone();
   document.querySelectorAll('[data-edit-ms]').forEach(b=>b.onclick=()=>openMilestone(b.dataset.editMs));
-  document.querySelectorAll('[data-del-ms]').forEach(b=>b.onclick=async()=>{const id=b.dataset.delMs;if(confirm('Delete this marker?')){const deleted=milestones.find(m=>m.id===id);milestones=milestones.filter(m=>m.id!==id);await saveMilestones();render();
+  document.querySelectorAll('[data-del-ms]').forEach(b=>b.onclick=async()=>{const id=b.dataset.delMs;if(await crConfirmDelete('Delete this marker?')){const deleted=milestones.find(m=>m.id===id);milestones=milestones.filter(m=>m.id!==id);await saveMilestones();render();
     if(deleted)showUndoToast('Marker deleted',async()=>{milestones.push(deleted);await saveMilestones();render();});
   }});
 }
@@ -1274,25 +1291,25 @@ function updateBulkBar(){$('bulkBarSlot').innerHTML=bulkBarHTML();bindBulkBar();
 function bindBulkBar(){
   if(!$('bulkTagBtn'))return;
   $('bulkTagBtn').onclick=async()=>{
-    const tag=prompt(`Tag to add to ${selectedTradeIds.size} trade(s):`);if(!tag||!tag.trim())return;
+    const tag=await crPrompt(`Tag to add to ${selectedTradeIds.size} trade(s):`);if(!tag||!tag.trim())return;
     const t2=tag.trim();
     trades.forEach(t=>{if(selectedTradeIds.has(t.id)){const tags=String(t.tags||'').split(',').map(x=>x.trim()).filter(Boolean);if(!tags.includes(t2))tags.push(t2);t.tags=tags.join(', ');}});
     await saveTrades();render();
   };
   $('bulkSetupBtn').onclick=async()=>{
-    const setup=prompt(`Set setup for ${selectedTradeIds.size} trade(s):`);if(setup==null)return;
+    const setup=await crPrompt(`Set setup for ${selectedTradeIds.size} trade(s):`);if(setup==null)return;
     trades.forEach(t=>{if(selectedTradeIds.has(t.id))t.setup=setup.trim();});
     await saveTrades();render();
   };
   $('bulkGradeBtn').onclick=async()=>{
-    const grade=prompt(`Set grade (A, B, C, D, or F) for ${selectedTradeIds.size} trade(s):`);if(grade==null)return;
-    const g=grade.trim().toUpperCase();if(g&&!['A','B','C','D','F'].includes(g)){alert('Grade must be A, B, C, D, or F.');return;}
+    const grade=await crPrompt(`Set grade (A, B, C, D, or F) for ${selectedTradeIds.size} trade(s):`);if(grade==null)return;
+    const g=grade.trim().toUpperCase();if(g&&!['A','B','C','D','F'].includes(g)){await crAlert('Grade must be A, B, C, D, or F.');return;}
     trades.forEach(t=>{if(selectedTradeIds.has(t.id))t.grade=g;});
     await saveTrades();render();
   };
   $('bulkDeleteBtn').onclick=async()=>{
     const ids=[...selectedTradeIds];if(!ids.length)return;
-    if(!confirm(`Delete ${ids.length} trade(s)?`))return;
+    if(!await crConfirmDelete(`Delete ${ids.length} trade(s)?`))return;
     const deleted=trades.filter(t=>ids.includes(t.id));
     trades=trades.filter(t=>!ids.includes(t.id));selectedTradeIds.clear();
     await saveTrades();render();
@@ -1337,7 +1354,7 @@ function bindFilters(){document.querySelectorAll('[data-filter]').forEach(sel=>{
 function bindRowActions(){
   document.querySelectorAll('tr[data-open]').forEach(tr=>tr.onclick=()=>openDetail(tr.dataset.open));
   document.querySelectorAll('.iconbtn.edit').forEach(b=>b.onclick=e=>{e.stopPropagation();openTrade(b.dataset.id);});
-  document.querySelectorAll('.iconbtn.del').forEach(b=>b.onclick=async e=>{e.stopPropagation();const id=b.dataset.id;if(confirm('Delete this trade?')){
+  document.querySelectorAll('.iconbtn.del').forEach(b=>b.onclick=async e=>{e.stopPropagation();const id=b.dataset.id;if(await crConfirmDelete('Delete this trade?')){
     const deleted=trades.find(t=>t.id===id);trades=trades.filter(t=>t.id!==id);selectedTradeIds.delete(id);await saveTrades();render();
     if(deleted)showUndoToast('Trade deleted',async()=>{trades.push(deleted);await saveTrades();render();});
   }});
@@ -1524,7 +1541,7 @@ function openJournal(date){
 }
 function setMood(m){jMood=m;document.querySelectorAll('#j_mood button').forEach(b=>b.classList.toggle('on',+b.dataset.mood===m));}
 async function saveJournalEntry(){const d=$('j_date').value;if(!d)return;journal[d]={mood:jMood,text:$('j_text').value.trim()};await saveJournal();$('journalOverlay').classList.remove('open');render();}
-async function deleteJournalEntry(){const d=$('j_date').value;if(d&&journal[d]&&confirm('Delete this journal entry?')){const deleted=journal[d];delete journal[d];await saveJournal();$('journalOverlay').classList.remove('open');render();
+async function deleteJournalEntry(){const d=$('j_date').value;if(d&&journal[d]&&await crConfirmDelete('Delete this journal entry?')){const deleted=journal[d];delete journal[d];await saveJournal();$('journalOverlay').classList.remove('open');render();
   showUndoToast('Journal entry deleted',async()=>{journal[d]=deleted;await saveJournal();render();});
 }}
 
@@ -1559,10 +1576,10 @@ function openPb(i){pbIdx=(i==null?null:i);const p=i==null?null:playbook[i];
   $('pbTitle').textContent=p?'Edit Setup':'Playbook Setup';
   $('pb_name').value=p?p.name:'';$('pb_desc').value=p?p.desc:'';$('pb_rules').value=p?(p.rules||[]).join('\n'):'';
   $('pb_delete').style.display=p?'inline-flex':'none';$('pbOverlay').classList.add('open');}
-async function savePbEntry(){const name=$('pb_name').value.trim();if(!name){alert('Give the setup a name.');return;}
+async function savePbEntry(){const name=$('pb_name').value.trim();if(!name){await crAlert('Give the setup a name.');return;}
   const obj={name,desc:$('pb_desc').value.trim(),rules:$('pb_rules').value.split('\n').map(x=>x.trim()).filter(Boolean)};
   if(pbIdx==null)playbook.push(obj);else playbook[pbIdx]=obj;await savePb();$('pbOverlay').classList.remove('open');render();}
-async function deletePbEntry(){if(pbIdx!=null&&confirm('Delete this setup?')){const deleted=playbook[pbIdx],idx=pbIdx;playbook.splice(pbIdx,1);await savePb();$('pbOverlay').classList.remove('open');render();
+async function deletePbEntry(){if(pbIdx!=null&&await crConfirmDelete('Delete this setup?')){const deleted=playbook[pbIdx],idx=pbIdx;playbook.splice(pbIdx,1);await savePb();$('pbOverlay').classList.remove('open');render();
   showUndoToast('Playbook setup deleted',async()=>{playbook.splice(idx,0,deleted);await savePb();render();});
 }}
 
@@ -1705,7 +1722,7 @@ async function saveNoteEntry(){const title=$('n_title').value.trim(),body=$('n_b
   if(noteId){const i=notes.findIndex(x=>x.id===noteId);notes[i]=Object.assign(notes[i],{title,body,updated:Date.now()});}
   else notes.push({id:'n'+Date.now(),title,body,created:Date.now(),updated:Date.now()});
   await saveNotes();$('noteOverlay').classList.remove('open');render();}
-async function deleteNoteEntry(){if(noteId&&confirm('Delete this note?')){const deleted=notes.find(x=>x.id===noteId);notes=notes.filter(x=>x.id!==noteId);await saveNotes();$('noteOverlay').classList.remove('open');render();
+async function deleteNoteEntry(){if(noteId&&await crConfirmDelete('Delete this note?')){const deleted=notes.find(x=>x.id===noteId);notes=notes.filter(x=>x.id!==noteId);await saveNotes();$('noteOverlay').classList.remove('open');render();
   if(deleted)showUndoToast('Note deleted',async()=>{notes.push(deleted);await saveNotes();render();});
 }}
 
@@ -1739,12 +1756,12 @@ function openMilestone(id){msId=id||null;const m=id?milestones.find(x=>x.id===id
   $('ms_label').value=m?m.label:'';$('ms_note').value=m?m.note:'';
   $('ms_delete').style.display=m?'inline-flex':'none';
   $('msOverlay').classList.add('open');$('ms_label').focus();}
-async function saveMilestone(){const label=$('ms_label').value.trim();if(!label){alert('Give this marker a short label.');return;}
+async function saveMilestone(){const label=$('ms_label').value.trim();if(!label){await crAlert('Give this marker a short label.');return;}
   const obj={date:$('ms_date').value,category:$('ms_category').value,label,note:$('ms_note').value.trim()};
   if(msId){const i=milestones.findIndex(x=>x.id===msId);milestones[i]=Object.assign(milestones[i],obj);}
   else milestones.push(Object.assign(obj,{id:'m'+Date.now()}));
   await saveMilestones();$('msOverlay').classList.remove('open');render();}
-async function deleteMilestone(){if(msId&&confirm('Delete this marker?')){const deleted=milestones.find(x=>x.id===msId);milestones=milestones.filter(x=>x.id!==msId);await saveMilestones();$('msOverlay').classList.remove('open');render();
+async function deleteMilestone(){if(msId&&await crConfirmDelete('Delete this marker?')){const deleted=milestones.find(x=>x.id===msId);milestones=milestones.filter(x=>x.id!==msId);await saveMilestones();$('msOverlay').classList.remove('open');render();
   if(deleted)showUndoToast('Marker deleted',async()=>{milestones.push(deleted);await saveMilestones();render();});
 }}
 
@@ -1865,7 +1882,7 @@ function updateCalc(){const t=readForm();const rr=plannedRR(t),risk=riskOf(t),p=
   $('c_pnl').textContent=p!==null?money(p):'—';$('c_pnl').className='cv mono '+(p!==null?cls(p):'');
   $('c_rmult').textContent=r!==null?(r>=0?'+':'')+r.toFixed(2)+'R':'—';$('c_rmult').className='cv mono '+(r!==null?cls(r):'');}
 function updateShotPrev(){const img=$('shotPrev');if(curShot){img.src=curShot;img.style.display='block';$('shotRemove').style.display='inline-flex';}else{img.style.display='none';$('shotRemove').style.display='none';}}
-function handleShot(file){const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{
+function handleShot(file){const r=new FileReader();r.onload=async()=>{const img=new Image();img.onload=()=>{
   const max=1100;let{width:w,height:h}=img;if(w>max||h>max){const sc=max/Math.max(w,h);w=Math.round(w*sc);h=Math.round(h*sc);}
   const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
   curShot=cv.toDataURL('image/jpeg',0.72);updateShotPrev();};img.src=r.result;};r.readAsDataURL(file);}
@@ -1916,7 +1933,7 @@ function download(name,content,type){const blob=new Blob([content],{type});const
 function restore(file){const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);
   if(Array.isArray(d.trades)){trades=d.trades;if(d.settings)settings=Object.assign(settings,d.settings);if(d.journal)journal=d.journal;if(Array.isArray(d.playbook))playbook=d.playbook;if(Array.isArray(d.notes))notes=d.notes;if(Array.isArray(d.milestones))milestones=d.milestones;
     await saveTrades();await saveSettings();await saveJournal();await savePb();await saveNotes();await saveMilestones();$('settingsOverlay').classList.remove('open');render();}
-  else alert('That file does not look like a Crema backup.');}catch(e){alert('Could not read that file.');}};r.readAsText(file);}
+  else await crAlert('That file does not look like a Crema backup.');}catch(e){await crAlert('Could not read that file.');}};r.readAsText(file);}
 
 /* ---------- CSV import (incl. TradingView) ---------- */
 function parseDelim(text,delim){const rows=[];let row=[],cur='',inQ=false;
@@ -1934,13 +1951,13 @@ function sigOfExact(t){return [t.symbol,t.entryTime||'',t.exitTime||'',t.size,t.
 async function commitImport(newTrades,msg){
   const seen=new Set(trades.map(sigOf));
   const add=newTrades.filter(t=>!seen.has(sigOf(t)));
-  if(add.length===0){alert('No new trades to import — these look like they were already imported (fuzzy match on symbol, date, entry, size and direction).');return;}
-  if(!confirm(msg.replace('{n}',add.length)+(add.length<newTrades.length?`\n(${newTrades.length-add.length} duplicate(s) skipped.)`:'')))return;
+  if(add.length===0){await crAlert('No new trades to import — these look like they were already imported (fuzzy match on symbol, date, entry, size and direction).');return;}
+  if(!await crConfirm(msg.replace('{n}',add.length)+(add.length<newTrades.length?`\n(${newTrades.length-add.length} duplicate(s) skipped.)`:'')))return;
   trades=trades.concat(add);
   await saveTrades();$('settingsOverlay').classList.remove('open');$('tradeOverlay').classList.remove('open');$('pasteOverlay').classList.remove('open');render();
 }
-function routeImportRows(rows){
-  if(rows.length<2){alert('That data looks empty — make sure you included the header row.');return;}
+async function routeImportRows(rows){
+  if(rows.length<2){await crAlert('That data looks empty — make sure you included the header row.');return;}
   const header=rows[0].map(h=>h.trim().toLowerCase());const col=(...names)=>{for(const n of names){const i=header.indexOf(n);if(i>=0)return i;}return -1;};const data=rows.slice(1);
   if(col('entry','entry price')>=0&&col('exit','exit price')>=0){importCompleted(data,col);return;}
   const cSide=col('side','action','b/s','buy/sell','direction'),cPrice=col('fill price','price','avg fill price','avg price','exec price','executed price','fillprice','execution price'),cSym=col('symbol','instrument','ticker','contract','market','product'),cQty=col('qty','quantity','size','filled qty','volume','lots','contracts','amount','filled');
@@ -2010,14 +2027,14 @@ function applyColumnMap(){
   $('mapOverlay').classList.remove('open');
   _mapRows=null;
 }
-function importCSV(file){const r=new FileReader();r.onload=()=>{try{routeImportRows(parseCSV(r.result));}catch(e){console.error(e);alert('Could not read that CSV.');}};r.readAsText(file);}
-function importPasted(text){try{if(!text||!text.trim()){alert('Paste some data first.');return;}routeImportRows(parseDelim(text,detectDelim(text)));}catch(e){console.error(e);alert('Could not parse that data.');}}
-function importCompleted(data,col){const g=(row,i)=>i>=0?(row[i]||''):'';
+async function importCSV(file){const r=new FileReader();r.onload=async()=>{try{routeImportRows(parseCSV(r.result));}catch(e){console.error(e);await crAlert('Could not read that CSV.');}};r.readAsText(file);}
+async function importPasted(text){try{if(!text||!text.trim()){await crAlert('Paste some data first.');return;}routeImportRows(parseDelim(text,detectDelim(text)));}catch(e){console.error(e);await crAlert('Could not parse that data.');}}
+async function importCompleted(data,col){const g=(row,i)=>i>=0?(row[i]||''):'';
   const cSym=col('symbol'),cDir=col('direction','side'),cEntry=col('entry','entry price'),cExit=col('exit','exit price'),cStop=col('stop','stop loss'),cTp=col('take_profit','take profit','tp'),cSize=col('size','qty','quantity'),cFees=col('fees','commission'),cSetup=col('setup','strategy'),cNotes=col('notes'),cDate=col('date','closing time','time'),cTags=col('tags'),cGrade=col('grade'),cAcct=col('account');
   const out=[];data.forEach((row,k)=>{const sym=String(g(row,cSym)).split(':').pop().trim().toUpperCase();const entry=cleanNum(g(row,cEntry)),exit=cleanNum(g(row,cExit)),size=cleanNum(g(row,cSize));if(!sym||entry==null||exit==null||!size)return;
     const dir=String(g(row,cDir)).toLowerCase().startsWith('s')?'short':'long';
     out.push({id:'i'+Date.now()+'_'+k,created:Date.now()+k,date:dateOnly(g(row,cDate)),symbol:sym,direction:dir,entry,exit,stop:cleanNum(g(row,cStop)),tp:cleanNum(g(row,cTp)),size,fees:cleanNum(g(row,cFees))||0,setup:String(g(row,cSetup)).trim(),notes:String(g(row,cNotes)).trim(),tags:String(g(row,cTags)).trim(),grade:String(g(row,cGrade)).trim(),account:String(g(row,cAcct)).trim()});});
-  if(!out.length){alert('Found entry/exit columns but no valid trade rows.');return;}commitImport(out,'Found {n} completed trades in this CSV.\n\nImport them?');}
+  if(!out.length){await crAlert('Found entry/exit columns but no valid trade rows.');return;}await commitImport(out,'Found {n} completed trades in this CSV.\n\nImport them?');}
 function mergeSameExitTrades(out){
   const groups={};
   out.forEach(t=>{const key=t.symbol+'|'+t.direction+'|'+(t.exitTime||t.date)+'|'+t.exit;(groups[key]=groups[key]||[]).push(t);});
@@ -2030,7 +2047,7 @@ function mergeSameExitTrades(out){
     merged.push({...group[0],entry:+avgEntry.toFixed(8),size:totalSize,fees:+totalFees.toFixed(6)});});
   return merged.sort((a,b)=>(a.date||'')<(b.date||'')?-1:1);
 }
-function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(row[i]||''):'';
+async function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(row[i]||''):'';
   if(ix.cStatus>=0){const st=get(ix.cStatus).toLowerCase();if(st&&st.indexOf('fill')<0)return null;}
   const side=get(ix.cSide).trim().toLowerCase();const sideN=side.startsWith('b')?'buy':side.startsWith('s')?'sell':null;
   const qty=cleanNum(get(ix.cQty)),price=cleanNum(get(ix.cPrice));if(!sideN||!qty||price==null)return null;const time=ix.cTime>=0?get(ix.cTime):'';
@@ -2038,7 +2055,7 @@ function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(ro
   const stopPx=ix.cStopPx>=0?cleanNum(get(ix.cStopPx)):null;
   const limitPx=ix.cLimitPx>=0?cleanNum(get(ix.cLimitPx)):null;
   return {sym:get(ix.cSym).split(':').pop().trim().toUpperCase(),side:sideN,qty:Math.abs(qty),price,comm:Math.abs(cleanNum(get(ix.cComm))||0),time,ord:k,ts:tstamp(time),type,stopPx,limitPx};}).filter(Boolean);
-  if(!fills.length){alert('No filled orders found in that file.');return;}
+  if(!fills.length){await crAlert('No filled orders found in that file.');return;}
   const hasTs=fills.some(f=>f.ts!=null);if(hasTs)fills.sort((a,b)=>(a.ts??0)-(b.ts??0)||a.ord-b.ord);else fills.reverse();
   const hasTypes=fills.some(f=>f.type);
   const hasStopPx=fills.some(f=>f.stopPx!=null);
@@ -2061,7 +2078,7 @@ function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(ro
   const openSymbols=Object.entries(books).filter(([,lots])=>lots.length>0).map(([sym])=>sym);
   if(!out.length){
     const openMsg=openSymbols.length?'\n\nOpen positions (still in TradingView): '+openSymbols.join(', ')+'\nClose them and re-export to import.':'';
-    alert('Found '+fills.length+' fills but no completed round-trip trades.'+openMsg);return;}
+   await crAlert('Found '+fills.length+' fills but no completed round-trip trades.'+openMsg);return;}
   // scale-in merge: combine fills that share the same exit into one trade with averaged entry
   const scaledOut=mergeSameExitTrades(out);
   const mergedCount=out.length-scaledOut.length;
@@ -2071,7 +2088,7 @@ function importFills(data,ix){let fills=data.map((row,k)=>{const get=i=>i>=0?(ro
   if(openSymbols.length)msg+='\n• Still open (skipped): '+openSymbols.join(', ');
   if(hasTypes&&slTpDetected>0)msg+='\n• '+slTpDetected+' trade(s) had SL/TP auto-detected from order type ✓';
   else if(!hasTypes)msg+='\n\nTip: include the "Type" column to auto-detect stop-loss and take-profit prices.';
-  msg+='\n\nImport now?';commitImport(scaledOut,msg);}
+  msg+='\n\nImport now?';await commitImport(scaledOut,msg);}
 
 /* ---------- samples ---------- */
 async function seedSamples(){const base=Date.now()-12*864e5;
@@ -2123,7 +2140,7 @@ function renderViewsList(){
   document.querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{const v=views[+b.dataset.apply];filters=Object.assign({symbol:'',setup:'',direction:'',result:'',tag:'',account:'',context:''},v.filters);$('viewsOverlay').classList.remove('open');render();});
   document.querySelectorAll('[data-delview]').forEach(b=>b.onclick=async()=>{views.splice(+b.dataset.delview,1);settings.savedViews=views;await saveSettings();renderViewsList();});
 }
-async function saveCurrentView(){const name=$('view_name').value.trim();if(!name){alert('Give this view a name.');return;}
+async function saveCurrentView(){const name=$('view_name').value.trim();if(!name){await crAlert('Give this view a name.');return;}
   settings.savedViews=settings.savedViews||[];settings.savedViews.push({name,filters:{...filters}});await saveSettings();$('view_name').value='';renderViewsList();}
 function runSearch(q){
   q=q.trim().toLowerCase();
@@ -2140,7 +2157,7 @@ function runSearch(q){
   document.querySelectorAll('[data-hit]').forEach(el=>el.onclick=()=>{hits[+el.dataset.hit].action();$('searchOverlay').classList.remove('open');});
 }
 $('importFile').onchange=e=>{if(e.target.files[0])importCSV(e.target.files[0]);e.target.value='';};
-$('clearBtn').onclick=async()=>{if(confirm('Delete ALL trades permanently? (Journal and playbook are kept.)')){trades=[];await saveTrades();$('settingsOverlay').classList.remove('open');render();}};
+$('clearBtn').onclick=async()=>{if(await crConfirm('Delete ALL trades permanently? (Journal and playbook are kept.)')){trades=[];await saveTrades();$('settingsOverlay').classList.remove('open');render();}};
 document.querySelectorAll('#f_dir button').forEach(b=>b.onclick=()=>setDir(b.dataset.dir));
 ['f_entry','f_exit','f_stop','f_tp','f_size','f_fees'].forEach(id=>$(id).addEventListener('input',updateCalc));
 $('f_setup').addEventListener('input',()=>{renderRulesChecklist();});
@@ -2148,7 +2165,7 @@ $('shotBtn').onclick=()=>$('f_shot').click();$('f_shot').onchange=e=>{if(e.targe
 $('shotRemove').onclick=()=>{curShot=null;updateShotPrev();};
 $('closeDetail').onclick=()=>$('detailOverlay').classList.remove('open');
 $('detailEdit').onclick=()=>{$('detailOverlay').classList.remove('open');openTrade(detailId);};
-$('detailDelete').onclick=async()=>{if(detailId&&confirm('Delete this trade?')){const deleted=trades.find(t=>t.id===detailId);trades=trades.filter(t=>t.id!==detailId);selectedTradeIds.delete(detailId);await saveTrades();$('detailOverlay').classList.remove('open');render();
+$('detailDelete').onclick=async()=>{if(detailId&&await crConfirmDelete('Delete this trade?')){const deleted=trades.find(t=>t.id===detailId);trades=trades.filter(t=>t.id!==detailId);selectedTradeIds.delete(detailId);await saveTrades();$('detailOverlay').classList.remove('open');render();
   if(deleted)showUndoToast('Trade deleted',async()=>{trades.push(deleted);await saveTrades();render();});
 }};
 $('detailShare').onclick=()=>shareTradeImage(detailId);
@@ -2176,7 +2193,7 @@ $('saveNote').onclick=saveNoteEntry;$('n_delete').onclick=deleteNoteEntry;
 $('n_tpl').onchange=e=>{const t=NOTE_TEMPLATES[e.target.value];if(t){const cur=$('n_body').value;$('n_body').value=cur?cur+'\n'+t:t;}e.target.value='';};
 // lightbox
 $('lightbox').onclick=()=>$('lightbox').classList.remove('open');
-[$('tradeOverlay'),$('settingsOverlay'),$('detailOverlay'),$('journalOverlay'),$('pbOverlay'),$('calcOverlay'),$('goalsOverlay'),$('noteOverlay'),$('pasteOverlay'),$('searchOverlay'),$('viewsOverlay'),$('msOverlay'),$('mapOverlay'),$('guideOverlay')].forEach(o=>{if(o)o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
+[$('tradeOverlay'),$('settingsOverlay'),$('detailOverlay'),$('journalOverlay'),$('pbOverlay'),$('calcOverlay'),$('goalsOverlay'),$('noteOverlay'),$('pasteOverlay'),$('searchOverlay'),$('viewsOverlay'),$('msOverlay'),$('mapOverlay'),$('guideOverlay'),$('dialogOverlay')].forEach(o=>{if(o)o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));$('lightbox').classList.remove('open');return;}
   if(e.target.matches('input,textarea,select'))return;
