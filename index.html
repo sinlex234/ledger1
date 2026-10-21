@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>
 <style>
   :root{
     --bg:#14100b; --bg2:#1a140e; --surface:#201810; --surface2:#291f15;
@@ -46,6 +47,37 @@
   .brand h1{font-family:'Fraunces';font-weight:800;font-size:23px;letter-spacing:.14em;margin:0;line-height:1;color:var(--cream)}
   .brand .sub{font-size:11.5px;color:var(--muted);letter-spacing:.22em;text-transform:uppercase;margin-top:5px}
   .hbtns{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  /* ---------- accounts ---------- */
+  #dialogOverlay{z-index:60}
+  #authBtn{display:none;align-items:center;gap:8px}
+  #authBtn.show{display:inline-flex}
+  .acct-av{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;
+    background:linear-gradient(140deg,var(--gold),#b07e3e);color:#1c1207;text-transform:uppercase;flex:none}
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted2);flex:none}
+  .sync-dot.ok{background:var(--green)}.sync-dot.busy{background:var(--gold);animation:syncpulse 1s ease-in-out infinite}.sync-dot.err{background:var(--red)}
+  @keyframes syncpulse{50%{opacity:.35}}
+  .auth-tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:18px}
+  .auth-tabs button{flex:1;padding:9px 10px;border-radius:9px;background:transparent;color:var(--muted)}
+  .auth-tabs button.on{background:var(--surface2);color:var(--cream);box-shadow:inset 0 0 0 1px var(--line2)}
+  .auth-form{display:flex;flex-direction:column;gap:13px}
+  .auth-form .btn{width:100%;justify-content:center}
+  .btn.google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+  .btn.google svg{width:18px;height:18px}
+  .auth-or{display:flex;align-items:center;gap:12px;color:var(--muted2);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;margin:4px 0}
+  .auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:var(--line2)}
+  .auth-msg{font-size:13px;line-height:1.5;border-radius:10px;padding:10px 12px;display:none}
+  .auth-msg.show{display:block}
+  .auth-msg.err{background:rgba(221,125,94,.12);color:var(--red);border:1px solid rgba(221,125,94,.3)}
+  .auth-msg.ok{background:rgba(174,205,122,.12);color:var(--green);border:1px solid rgba(174,205,122,.3)}
+  .auth-link{background:none;border:none;padding:0;color:var(--gold);font-size:12.5px;font-weight:600;align-self:flex-end}
+  .auth-link:hover{text-decoration:underline}
+  .acct-card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line2);border-radius:14px;background:var(--surface);margin-bottom:16px}
+  .acct-card .acct-av{width:42px;height:42px;font-size:18px}
+  .acct-card .nm{font-weight:700;color:var(--cream);font-size:15px}
+  .acct-card .em{font-size:12.5px;color:var(--muted);word-break:break-all}
+  .acct-sync{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  @media(max-width:620px){.btn.acct-btn .acct-nm{display:none}}
+
 
   .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:22px;flex-wrap:wrap}
   .tabs button{padding:9px 16px;border-radius:9px;background:transparent;color:var(--muted);font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
@@ -362,9 +394,10 @@
           <path d="M4 9h13v4a4 4 0 01-4 4H8a4 4 0 01-4-4V9z"/><path d="M17 10h2.2a2 2 0 010 4H17"/>
           <path d="M7.6 3.5c0 1.1-.9 1.5-.9 2.6M11 3.5c0 1.1-.9 1.5-.9 2.6M14.4 3.5c0 1.1-.9 1.5-.9 2.6"/></svg>
       </div>
-      <div><h1>CREMA</h1><div class="sub">Paper Trading Journal</div></div>
+      <div><h1>CREMA</h1><div class="sub">Trading Journal</div></div>
     </div>
     <div class="hbtns">
+      <button class="btn icon acct-btn" id="authBtn" title="Account"></button>
       <button class="btn icon" id="exportBtn" title="Export CSV">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Export</button>
       <button class="btn icon" id="guideBtn" title="Import guide">
@@ -616,7 +649,7 @@
       <div class="guide-step">
         <div class="gs-num">1</div>
         <div class="gs-body">
-          <div class="gs-title">Open TradingView Paper Trading</div>
+          <div class="gs-title">Open the TradingView Trading Panel</div>
           <div class="gs-text">At the bottom of any chart, click your broker name (it shows "Paper trading" if you're in paper mode). The trading panel opens at the bottom of your screen.</div>
         </div>
       </div>
@@ -741,6 +774,48 @@
   <div class="modal-foot"><button class="btn" id="cancelTags">Cancel</button><button class="btn primary" id="saveTags">Apply changes</button></div>
 </div></div>
 
+
+<!-- Account Modal -->
+<div class="overlay" id="authOverlay"><div class="modal" style="max-width:420px">
+  <div class="modal-h"><h2 id="authTitle">Sign in</h2>
+    <button class="iconbtn" id="closeAuth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+
+  <div id="authSignedOut">
+    <div class="auth-tabs" id="authTabs"><button data-mode="signin" class="on">Sign in</button><button data-mode="signup">Create account</button></div>
+    <div class="auth-form">
+      <button class="btn google" id="googleBtn"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Continue with Google</button>
+      <div class="auth-or">or</div>
+      <div class="field" id="a_emailWrap" style="display:none"><label>Email</label><input type="email" id="a_email" autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field" id="a_userWrap" style="display:none"><label>Username</label><input type="text" id="a_user" autocomplete="username" maxlength="20" placeholder="3–20 letters, numbers or _"></div>
+      <div class="field" id="a_idWrap"><label>Email or username</label><input type="text" id="a_id" autocomplete="username" placeholder="you@example.com or username"></div>
+      <div class="field" id="a_passWrap"><label>Password</label><input type="password" id="a_pass" autocomplete="current-password" placeholder="••••••••"></div>
+      <button class="auth-link" id="forgotBtn" type="button">Forgot password?</button>
+      <div class="auth-msg" id="authMsg"></div>
+      <button class="btn primary" id="authSubmit">Sign in</button>
+      <span class="hint" style="text-align:center">Your journal keeps working without an account. Signing in backs it up and syncs it across your devices.</span>
+    </div>
+  </div>
+
+  <div id="authReset" style="display:none">
+    <div class="auth-form">
+      <div class="field"><label>New password</label><input type="password" id="a_newpass" autocomplete="new-password" placeholder="At least 8 characters"></div>
+      <div class="auth-msg" id="resetMsg"></div>
+      <button class="btn primary" id="resetSubmit">Set new password</button>
+    </div>
+  </div>
+
+  <div id="authSignedIn" style="display:none">
+    <div class="acct-card"><div class="acct-av" id="acctAv">?</div><div style="min-width:0"><div class="nm" id="acctName"></div><div class="em" id="acctEmail"></div></div></div>
+    <div class="settings-row">
+      <div class="field"><label>Sync</label><div class="acct-sync"><span class="sync-dot" id="acctDot"></span><span id="acctSyncTxt"></span></div></div>
+      <div class="field"><label>Username</label>
+        <div style="display:flex;gap:8px"><input type="text" id="acctUser" maxlength="20" placeholder="Pick a username" style="flex:1"><button class="btn" id="acctUserSave">Save</button></div>
+        <span class="hint" id="acctUserHint">Lets you sign in with your username instead of your email.</span></div>
+    </div>
+    <div class="modal-foot" style="justify-content:space-between"><button class="btn" id="syncNowBtn">Sync now</button><button class="btn danger" id="signOutBtn">Sign out</button></div>
+  </div>
+</div></div>
+
 <!-- Settings Modal -->
 <div class="overlay" id="settingsOverlay"><div class="modal" style="max-width:480px">
   <div class="modal-h"><h2>Settings</h2>
@@ -851,6 +926,175 @@ async function saveJournal(){try{await store.set(K_JOURNAL,JSON.stringify(journa
 async function savePb(){try{await store.set(K_PB,JSON.stringify(playbook));}catch(e){}}
 async function saveNotes(){try{await store.set(K_NOTES,JSON.stringify(notes));}catch(e){}}
 async function saveMilestones(){try{await store.set(K_MILESTONES,JSON.stringify(milestones));}catch(e){}}
+
+/* ---------- accounts + cloud sync (Supabase) ----------
+   Fill these two values in from your Supabase project (Project Settings → API Keys / Data API).
+   Leave them blank and Crema works exactly as before, with no sign-in button.
+   See SETUP-ACCOUNTS.md for the full setup. */
+const SUPABASE_URL='https://pgaydhtrmrcdrvgbxqgq.supabase.co';       // Project URL, e.g. 'https://abcdefgh.supabase.co'
+const SUPABASE_ANON_KEY='sb_publishable_wU9vx3zI47P5jxCr7Gw-Pg_mC_YD_iV';  // Publishable key (sb_publishable_…) or legacy "anon" key — safe to put in the page
+const CLOUD_KEYS=[K_TRADES,K_SETTINGS,K_JOURNAL,K_PB,K_NOTES,K_MILESTONES];
+const K_DIRTY='tj:cloud-dirty',K_OWNER='tj:cloud-owner';
+const lsGet=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+const lsDel=k=>{try{localStorage.removeItem(k);}catch(e){}};
+let sb=null,authUser=null,authProfile=null,syncedFor=null,syncState='off',syncNote='',pushTimer=null,retryTimer=null,authMode='signin',lastSyncAt=null;
+let dirty=new Set((()=>{try{return JSON.parse(lsGet(K_DIRTY)||'[]');}catch(e){return [];}})());
+const _rawSet=store.set.bind(store);
+store.set=async(k,v)=>{const r=await _rawSet(k,v);if(CLOUD_KEYS.includes(k))markDirty(k);return r;};
+try{if(SUPABASE_URL&&SUPABASE_ANON_KEY&&window.supabase)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});}catch(e){console.error('Supabase init failed',e);}
+const redirectURL=()=>location.origin+location.pathname;
+
+function markDirty(k){if(!authUser||syncedFor!==authUser.id)return;dirty.add(k);lsSet(K_DIRTY,JSON.stringify([...dirty]));setSync('busy');clearTimeout(pushTimer);pushTimer=setTimeout(pushDirty,900);}
+function setSync(st,note){syncState=st;if(note!==undefined)syncNote=note;renderAuthBtn();renderAcctPanel();}
+async function pushDirty(){
+  if(!sb||!authUser||!dirty.size){if(authUser&&!dirty.size&&syncState!=='err')setSync('ok');return true;}
+  clearTimeout(retryTimer);
+  const keys=[...dirty],rows=[];
+  for(const k of keys){const r=await store.get(k);rows.push({user_id:authUser.id,key:k,value:r&&r.value?JSON.parse(r.value):null,updated_at:new Date().toISOString()});}
+  setSync('busy');
+  const {error}=await sb.from('crema_data').upsert(rows,{onConflict:'user_id,key'});
+  if(error){console.error(error);setSync('err',navigator.onLine?'Couldn’t reach the server — will retry':'Offline — changes will sync when you’re back online');retryTimer=setTimeout(pushDirty,15000);return false;}
+  keys.forEach(k=>dirty.delete(k));lsSet(K_DIRTY,JSON.stringify([...dirty]));lastSyncAt=new Date();
+  if(dirty.size)return pushDirty();setSync('ok','');return true;
+}
+async function pullCloud(){const {data,error}=await sb.from('crema_data').select('key,value');if(error){console.error(error);return null;}
+  const m={};(data||[]).forEach(r=>{if(CLOUD_KEYS.includes(r.key)&&r.value!=null)m[r.key]=r.value;});return m;}
+function resetMemory(){trades=[];settings={currency:'$',goals:{},acctSize:null,multipliers:{}};journal={};playbook=[];notes=[];milestones=[];}
+async function applyCloud(map){
+  for(const k of CLOUD_KEYS){if(dirty.has(k))continue;if(k in map)await _rawSet(k,JSON.stringify(map[k]));else await store.delete(k);}
+  resetMemory();await loadAll();applyTheme();render();
+}
+function localHasData(){return trades.length||Object.keys(journal).length||playbook.length||notes.length||milestones.length;}
+function cloudHasData(m){return (m[K_TRADES]||[]).length||Object.keys(m[K_JOURNAL]||{}).length||(m[K_PB]||[]).length||(m[K_NOTES]||[]).length||(m[K_MILESTONES]||[]).length;}
+function mergeList(a,b,keyFn){const out=new Map();[...(a||[]),...(b||[])].forEach(x=>{const k=keyFn(x);if(!out.has(k))out.set(k,x);});return [...out.values()];}
+async function mergeWithCloud(m){
+  const idKey=x=>(x&&(x.id||x.name))||JSON.stringify(x);
+  const tradeKey=x=>x&&x.entryTime?'sig:'+sigOfExact(x):'id:'+idKey(x);
+  trades=mergeList(mergeList(m[K_TRADES],trades,idKey),[],tradeKey);
+  journal=Object.assign({},journal,m[K_JOURNAL]||{});
+  settings=Object.assign(settings,m[K_SETTINGS]||{});
+  playbook=mergeList(m[K_PB],playbook,idKey);notes=mergeList(m[K_NOTES],notes,idKey);milestones=mergeList(m[K_MILESTONES],milestones,idKey);
+  await saveTrades();await saveSettings();await saveJournal();await savePb();await saveNotes();await saveMilestones();
+}
+async function onSignedIn(user){
+  authUser=user;if(syncedFor===user.id)return;
+  setSync('busy','Syncing…');loadProfile();
+  const owner=lsGet(K_OWNER);
+  if(owner!==user.id){dirty.clear();lsSet(K_DIRTY,'[]');}
+  if(owner===user.id){await pushDirty();}
+  const m=await pullCloud();
+  if(!m){setSync('err','Couldn’t load your account data — showing this device’s copy');setTimeout(()=>{syncedFor=null;onSignedIn(user);},20000);return;}
+  if(owner===user.id){await applyCloud(m);}
+  else if(!cloudHasData(m)){syncedFor=user.id;lsSet(K_OWNER,user.id);if(localHasData()){CLOUD_KEYS.forEach(k=>dirty.add(k));lsSet(K_DIRTY,JSON.stringify([...dirty]));await pushDirty();}else{await applyCloud(m);}setSync('ok','');return;}
+  else if(!localHasData()){await applyCloud(m);}
+  else{
+    const choice=await _showDialog({title:'Combine your journals?',icon:'',body:'This device has journal data that isn’t in your account yet. Merge it into your account, or replace it with what’s already saved in your account?',
+      buttons:[{label:'Use account data only',value:'cloud'},{label:'Merge both',primary:true,value:'merge'}]});
+    lsSet(K_OWNER,user.id);
+    if(choice==='merge'){syncedFor=user.id;await mergeWithCloud(m);await pushDirty();applyTheme();render();setSync('ok','');return;}
+    await applyCloud(m);
+  }
+  syncedFor=user.id;lsSet(K_OWNER,user.id);lastSyncAt=new Date();setSync(dirty.size?'busy':'ok','');if(dirty.size)pushDirty();
+}
+async function loadProfile(){if(!sb||!authUser)return;const {data}=await sb.from('profiles').select('username').eq('id',authUser.id).maybeSingle();authProfile=data||{};renderAuthBtn();renderAcctPanel();}
+function displayName(){const u=authProfile&&authProfile.username;const md=(authUser&&authUser.user_metadata)||{};return u||md.full_name||md.name||(authUser&&authUser.email)||'Account';}
+function renderAuthBtn(){const b=$('authBtn');if(!b)return;if(!sb){b.classList.remove('show');return;}b.classList.add('show');
+  if(!authUser){b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Sign in';b.title='Sign in or create an account';return;}
+  const n=displayName();const dot=syncState==='ok'?'ok':syncState==='err'?'err':syncState==='busy'?'busy':'';
+  b.innerHTML=`<span class="acct-av">${esc(n.charAt(0))}</span><span class="acct-nm">${esc(n.length>18?n.slice(0,17)+'…':n)}</span><span class="sync-dot ${dot}"></span>`;
+  b.title=syncState==='ok'?'Synced':syncState==='err'?syncNote:'Syncing…';}
+function renderAcctPanel(){if(!authUser||!$('acctName'))return;const n=displayName();
+  $('acctAv').textContent=n.charAt(0);$('acctName').textContent=n;$('acctEmail').textContent=authUser.email||'';
+  $('acctDot').className='sync-dot '+(syncState==='ok'?'ok':syncState==='err'?'err':'busy');
+  $('acctSyncTxt').textContent=syncState==='ok'?('All changes saved to your account'+(lastSyncAt?' · '+lastSyncAt.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):'')):syncState==='err'?syncNote:(syncNote||'Syncing…');
+  if(document.activeElement!==$('acctUser'))$('acctUser').value=(authProfile&&authProfile.username)||'';}
+function authMsg(id,text,kind){const el=$(id);el.textContent=text||'';el.className='auth-msg'+(text?' show '+(kind||'err'):'');}
+function setAuthMode(mode){authMode=mode;authMsg('authMsg','');
+  document.querySelectorAll('#authTabs button').forEach(b=>b.classList.toggle('on',b.dataset.mode===mode));
+  const up=mode==='signup',fg=mode==='forgot';
+  $('authTitle').textContent=up?'Create account':fg?'Reset password':'Sign in';
+  $('a_emailWrap').style.display=up?'flex':'none';$('a_userWrap').style.display=up?'flex':'none';$('a_idWrap').style.display=up?'none':'flex';
+  $('a_passWrap').style.display=fg?'none':'flex';$('forgotBtn').style.display=mode==='signin'?'block':'none';
+  $('a_pass').autocomplete=up?'new-password':'current-password';$('a_pass').placeholder=up?'At least 8 characters':'••••••••';
+  $('authSubmit').textContent=up?'Create account':fg?'Email me a reset link':'Sign in';
+  $('authTabs').style.display=fg?'none':'flex';$('googleBtn').style.display=fg?'none':'flex';document.querySelector('#authSignedOut .auth-or').style.display=fg?'none':'flex';}
+function openAuth(){$('authSignedOut').style.display=authUser?'none':'block';$('authSignedIn').style.display=authUser?'block':'none';$('authReset').style.display='none';
+  if(authUser){$('authTitle').textContent='Your account';renderAcctPanel();}else setAuthMode('signin');
+  $('authOverlay').classList.add('open');}
+const USER_RE=/^[a-z0-9_]{3,20}$/;
+function friendlyAuthError(e){const m=(e&&e.message)||String(e);
+  if(/invalid login credentials/i.test(m))return 'That email/username and password don’t match.';
+  if(/email not confirmed/i.test(m))return 'Please confirm your email first — check your inbox for the link.';
+  if(/already registered|already been registered/i.test(m))return 'An account with that email already exists. Try signing in.';
+  if(/rate limit|too many/i.test(m))return 'Too many attempts — wait a minute and try again.';
+  if(/failed to fetch|network/i.test(m))return 'Can’t reach the server. Check your connection.';
+  return m;}
+async function resolveEmail(id){id=id.trim();if(id.includes('@'))return id;
+  const {data,error}=await sb.rpc('email_for_username',{uname:id.toLowerCase()});if(error)throw error;return data||null;}
+async function submitAuth(){const btn=$('authSubmit');if(btn.disabled)return;btn.disabled=true;authMsg('authMsg','');
+  try{
+    if(authMode==='signup'){
+      const email=$('a_email').value.trim(),user=$('a_user').value.trim().toLowerCase(),pass=$('a_pass').value;
+      if(!/^\S+@\S+\.\S+$/.test(email))return authMsg('authMsg','Enter a valid email address.');
+      if(!USER_RE.test(user))return authMsg('authMsg','Usernames are 3–20 characters: lowercase letters, numbers or _.');
+      if(pass.length<8)return authMsg('authMsg','Use a password of at least 8 characters.');
+      const {data:free,error:e1}=await sb.rpc('username_available',{uname:user});if(e1)throw e1;
+      if(!free)return authMsg('authMsg','That username is taken — try another.');
+      const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{username:user},emailRedirectTo:redirectURL()}});if(error)throw error;
+      if(data.user&&Array.isArray(data.user.identities)&&!data.user.identities.length)return authMsg('authMsg','An account with that email already exists. Try signing in.');
+      if(!data.session){authMsg('authMsg','Almost done — we sent a confirmation link to '+email+'. Open it to finish creating your account.','ok');return;}
+      $('authOverlay').classList.remove('open');
+    }else if(authMode==='forgot'){
+      const id=$('a_id').value.trim();if(!id)return authMsg('authMsg','Enter your email or username.');
+      const email=await resolveEmail(id);
+      if(email){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:redirectURL()});if(error)throw error;}
+      authMsg('authMsg','If that account exists, a reset link is on its way to its email.','ok');
+    }else{
+      const id=$('a_id').value.trim(),pass=$('a_pass').value;if(!id||!pass)return authMsg('authMsg','Enter your email or username and password.');
+      const email=await resolveEmail(id);if(!email)return authMsg('authMsg','No account found with that username.');
+      const {error}=await sb.auth.signInWithPassword({email,password:pass});if(error)throw error;
+      $('a_pass').value='';$('authOverlay').classList.remove('open');
+    }
+  }catch(e){console.error(e);authMsg('authMsg',friendlyAuthError(e));}
+  finally{btn.disabled=false;}}
+async function signOutFlow(){
+  const choice=await _showDialog({title:'Sign out',icon:'',body:'Your journal stays saved in your account. Keep a copy on this device too, or remove it (recommended on shared computers)?',
+    buttons:[{label:'Cancel',value:null},{label:'Remove from device',danger:true,value:'wipe'},{label:'Keep on device',primary:true,value:'keep'}]});
+  if(!choice)return;
+  if(dirty.size){const ok=await pushDirty();if(!ok&&!(await crConfirm('Some recent changes haven’t synced yet and will only exist on this device. Sign out anyway?','Unsynced changes')))return;}
+  await sb.auth.signOut();
+  if(choice==='wipe'){for(const k of CLOUD_KEYS)await store.delete(k);lsDel(K_OWNER);resetMemory();applyTheme();}
+  dirty.clear();lsSet(K_DIRTY,'[]');$('authOverlay').classList.remove('open');render();
+}
+async function saveUsername(){const u=$('acctUser').value.trim().toLowerCase();const hint=$('acctUserHint');
+  if(!USER_RE.test(u)){hint.textContent='3–20 characters: lowercase letters, numbers or _.';hint.style.color='var(--red)';return;}
+  const {error}=await sb.from('profiles').update({username:u}).eq('id',authUser.id);
+  if(error){hint.textContent=/duplicate|unique/i.test(error.message)?'That username is taken — try another.':friendlyAuthError(error);hint.style.color='var(--red)';return;}
+  authProfile=Object.assign(authProfile||{},{username:u});hint.textContent='Saved. You can now sign in with “'+u+'”.';hint.style.color='var(--green)';renderAuthBtn();renderAcctPanel();}
+function setupAuth(){
+  if(!sb){renderAuthBtn();return;}
+  $('authBtn').onclick=openAuth;$('closeAuth').onclick=()=>$('authOverlay').classList.remove('open');
+  $('authOverlay').addEventListener('click',e=>{if(e.target===$('authOverlay'))$('authOverlay').classList.remove('open');});
+  document.querySelectorAll('#authTabs button').forEach(b=>b.onclick=()=>setAuthMode(b.dataset.mode));
+  $('forgotBtn').onclick=()=>setAuthMode('forgot');
+  $('authSubmit').onclick=submitAuth;
+  ['a_email','a_user','a_id','a_pass'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')submitAuth();}));
+  $('googleBtn').onclick=async()=>{const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:redirectURL()}});if(error)authMsg('authMsg',friendlyAuthError(error));};
+  $('resetSubmit').onclick=async()=>{const p=$('a_newpass').value;if(p.length<8)return authMsg('resetMsg','Use at least 8 characters.');
+    const {error}=await sb.auth.updateUser({password:p});if(error)return authMsg('resetMsg',friendlyAuthError(error));
+    authMsg('resetMsg','Password updated — you’re signed in.','ok');setTimeout(()=>$('authOverlay').classList.remove('open'),1400);};
+  $('syncNowBtn').onclick=async()=>{syncedFor=null;await onSignedIn(authUser);};
+  $('signOutBtn').onclick=signOutFlow;$('acctUserSave').onclick=saveUsername;
+  window.addEventListener('online',()=>{if(authUser&&dirty.size)pushDirty();});
+  sb.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){authUser=session&&session.user;setTimeout(()=>{$('authSignedOut').style.display='none';$('authSignedIn').style.display='none';$('authReset').style.display='block';$('authTitle').textContent='Choose a new password';$('authOverlay').classList.add('open');},0);}
+    if(session&&session.user){const u=session.user;setTimeout(()=>onSignedIn(u),0);}
+    else if(event==='SIGNED_OUT'||event==='INITIAL_SESSION'){authUser=null;authProfile=null;syncedFor=null;setSync('off','');}
+  });
+  renderAuthBtn();
+}
+
 
 /* ---------- filtering + sorting ---------- */
 function sortedTrades(){return [...trades].sort((a,b)=>{const da=a.date||'',db=b.date||'';if(da!==db)return da<db?-1:1;return (a.created||0)-(b.created||0);});}
@@ -1770,7 +2014,7 @@ function renderEmpty(){
   $('app').innerHTML=`<div class="tablecard"><div class="empty">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
     <h3>No trades logged yet</h3>
-    <p>Take a trade on your TradingView paper account, then log it here — or import your Order History CSV. Crema tracks win rate, R-multiples, profit factor, drawdown, an equity curve and a monthly calendar automatically.</p>
+    <p>Take a trade — paper, funded or live — then log it here — or import your Order History CSV. Crema tracks win rate, R-multiples, profit factor, drawdown, an equity curve and a monthly calendar automatically.</p>
     <div class="row"><button class="btn primary" onclick="openTrade()">Log your first trade</button><button class="btn" id="emptyImportBtn">Import CSV</button><button class="btn" id="emptyPasteBtn">Paste data</button><button class="btn" id="seedBtn">Load sample data</button></div>
   </div></div>`;
   $('seedBtn').onclick=seedSamples;$('emptyImportBtn').onclick=()=>$('importFile').click();$('emptyPasteBtn').onclick=()=>openPaste();
@@ -1906,7 +2150,7 @@ function shareTradeImage(id){const t=trades.find(x=>x.id===id);if(!t)return;cons
   const light=settings.theme==='light';const W=920,H=480,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
   x.fillStyle=light?'#f1e8d7':'#14100b';x.fillRect(0,0,W,H);
   x.fillStyle=light?'#a9752a':'#d2a35f';x.font='700 22px Georgia';x.fillText('CREMA',44,58);
-  x.fillStyle=light?'#9b855f':'#897560';x.font='500 13px Arial';x.fillText('PAPER TRADING JOURNAL',44,78);
+  x.fillStyle=light?'#9b855f':'#897560';x.font='500 13px Arial';x.fillText('TRADING JOURNAL',44,78);
   x.fillStyle=light?'#33271a':'#efe4d2';x.font='800 46px Georgia';x.fillText(t.symbol+'  '+t.direction.toUpperCase(),44,150);
   x.fillStyle=p>=0?'#7aa83f':'#cf5a36';x.font='800 76px Georgia';x.fillText((p>=0?'+':'')+money(p),44,250);
   if(r!=null){x.font='700 30px Georgia';x.fillText((r>=0?'+':'')+r.toFixed(2)+'R',44,300);}
@@ -2207,6 +2451,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='m'||e.key==='M'){setView('mistakes');return;}
 });
 
-(async function init(){await loadAll();applyTheme();render();})();
+(async function init(){await loadAll();applyTheme();render();setupAuth();})();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 </script>

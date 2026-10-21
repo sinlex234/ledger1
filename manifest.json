@@ -1,7 +1,7 @@
 {
-  "name": "Crema — Paper Trading Journal",
+  "name": "Crema — Trading Journal",
   "short_name": "Crema",
-  "description": "A paper-trading journal with R-multiple, win rate, profit factor and full performance analytics.",
+  "description": "A trading journal for paper, funded and live accounts with R-multiple, win rate, profit factor and full performance analytics.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
