@@ -531,6 +531,7 @@
   <div class="grid2">
     <div class="field"><label>Account size</label><input type="number" step="any" id="rc_acct" placeholder="10000"></div>
     <div class="field"><label>Risk per trade (%)</label><input type="number" step="any" id="rc_risk" placeholder="1"></div>
+    <div class="field full"><label>Symbol <span style="color:var(--muted2)">(sets $ per point: MNQ = 2, NQ = 20, MES = 5, ES = 50)</span></label><input type="text" id="rc_sym" placeholder="MNQ" maxlength="14"></div>
     <div class="field full"><label>Direction</label><div class="seg" id="rc_dir"><button data-dir="long" class="long on">Long</button><button data-dir="short" class="short">Short</button></div></div>
     <div class="field"><label>Entry price</label><input type="number" step="any" id="rc_entry" placeholder="0.00"></div>
     <div class="field"><label>Stop price</label><input type="number" step="any" id="rc_stop" placeholder="0.00"></div>
@@ -905,7 +906,7 @@ function fmtDur(ms){if(ms==null)return '—';const m=Math.round(ms/60000);if(m<1
 const DEFAULT_MULTIPLIERS={ES:50,MES:5,NQ:20,MNQ:2,YM:5,MYM:0.5,RTY:50,M2K:5,CL:1000,GC:100,SI:5000,ZB:1000,ZN:1000,ZF:1000,ZT:2000,NG:10000,HG:25000};
 function getMultiplier(sym){const s=(sym||'').split(':').pop().toUpperCase().replace(/[0-9!]/g,'');return (settings.multipliers&&settings.multipliers[s])||DEFAULT_MULTIPLIERS[s]||1;}
 function pnlOf(t){if(t.entry==null||t.exit==null||t.size==null)return 0;const dir=t.direction==='short'?-1:1;return (t.exit-t.entry)*dir*t.size*getMultiplier(t.symbol)-(t.fees||0);}
-function riskOf(t){if(t.stop==null||t.entry==null||t.size==null)return null;const r=Math.abs(t.entry-t.stop)*t.size;return r>0?r:null;}
+function riskOf(t){if(t.stop==null||t.entry==null||t.size==null)return null;const r=Math.abs(t.entry-t.stop)*t.size*getMultiplier(t.symbol);return r>0?r:null;}
 function rMultiple(t){const risk=riskOf(t);if(!risk)return null;return pnlOf(t)/risk;}
 function plannedRR(t){if(t.stop==null||t.tp==null||t.entry==null)return null;const risk=Math.abs(t.entry-t.stop),rew=Math.abs(t.tp-t.entry);return risk>0?rew/risk:null;}
 function resultOf(t){const p=pnlOf(t);return p>0?'win':p<0?'loss':'be';}
@@ -1975,13 +1976,15 @@ let rcDir='long';
 function openCalc(){$('rc_acct').value=settings.acctSize||'';rcDirSet('long');calcCompute();$('calcOverlay').classList.add('open');}
 function rcDirSet(d){rcDir=d;document.querySelectorAll('#rc_dir button').forEach(b=>b.classList.toggle('on',b.dataset.dir===d));calcCompute();}
 function calcCompute(){const acct=num($('rc_acct').value),risk=num($('rc_risk').value),entry=num($('rc_entry').value),stop=num($('rc_stop').value);
+  const sym=$('rc_sym').value.trim(),mult=sym?getMultiplier(sym):1;
   if(acct!=null)settings.acctSize=acct;
   const riskAmt=(acct!=null&&risk!=null)?acct*risk/100:null;
   const dist=(entry!=null&&stop!=null)?Math.abs(entry-stop):null;
-  const size=(riskAmt!=null&&dist)?riskAmt/dist:null;
+  const raw=(riskAmt!=null&&dist)?riskAmt/(dist*mult):null;
+  const size=raw!=null&&mult>1?Math.floor(raw):raw;
   $('rc_riskamt').textContent=riskAmt!=null?money(riskAmt):'—';
   $('rc_dist').textContent=dist!=null?fmtPrice(dist):'—';
-  $('rc_size').textContent=size!=null?size.toLocaleString(undefined,{maximumFractionDigits:4}):'—';
+  $('rc_size').textContent=size!=null?(mult>1?size+' contract'+(size===1?'':'s')+(size<1?' (stop too wide for this risk)':''):size.toLocaleString(undefined,{maximumFractionDigits:4})):'—';
   const dir=rcDir==='short'?-1:1;const tgt=k=>(entry!=null&&dist)?fmtPrice(entry+dir*dist*k):'—';
   $('rc_1r').textContent=tgt(1);$('rc_2r').textContent=tgt(2);$('rc_3r').textContent=tgt(3);}
 
@@ -2143,8 +2146,8 @@ function multiplierStr(m){return Object.entries(m||{}).map(([k,v])=>k+'='+v).joi
 function parseMultipliers(s){const m={};s.split(/[,\n]+/).forEach(p=>{const[k,v]=p.trim().split('=');if(k&&v){const n=parseFloat(v);if(!isNaN(n))m[k.trim().toUpperCase()]=n;}});return m;}
 function openSettings(){$('s_currency').value=settings.currency;$('s_multipliers').value=multiplierStr(settings.multipliers);document.querySelectorAll('#s_theme button').forEach(b=>b.classList.toggle('on',(settings.theme||'dark')===b.dataset.theme));$('settingsOverlay').classList.add('open');}
 async function saveSettingsForm(){settings.currency=$('s_currency').value.trim()||'$';settings.multipliers=parseMultipliers($('s_multipliers').value);await saveSettings();$('settingsOverlay').classList.remove('open');render();}
-function mfeR(t){const risk=riskOf(t);let fav=null;if(t.direction==='short'){if(t.lo!=null)fav=(t.entry-t.lo)*t.size;}else{if(t.hi!=null)fav=(t.hi-t.entry)*t.size;}if(fav==null||fav<0)fav=fav==null?null:Math.max(0,fav);return {usd:fav,r:(fav!=null&&risk)?fav/risk:null};}
-function maeR(t){const risk=riskOf(t);let adv=null;if(t.direction==='short'){if(t.hi!=null)adv=(t.hi-t.entry)*t.size;}else{if(t.lo!=null)adv=(t.entry-t.lo)*t.size;}if(adv==null)return {usd:null,r:null};adv=Math.max(0,adv);return {usd:adv,r:risk?adv/risk:null};}
+function mfeR(t){const risk=riskOf(t);let fav=null;if(t.direction==='short'){if(t.lo!=null)fav=(t.entry-t.lo)*t.size*getMultiplier(t.symbol);}else{if(t.hi!=null)fav=(t.hi-t.entry)*t.size*getMultiplier(t.symbol);}if(fav==null||fav<0)fav=fav==null?null:Math.max(0,fav);return {usd:fav,r:(fav!=null&&risk)?fav/risk:null};}
+function maeR(t){const risk=riskOf(t);let adv=null;if(t.direction==='short'){if(t.hi!=null)adv=(t.hi-t.entry)*t.size*getMultiplier(t.symbol);}else{if(t.lo!=null)adv=(t.entry-t.lo)*t.size*getMultiplier(t.symbol);}if(adv==null)return {usd:null,r:null};adv=Math.max(0,adv);return {usd:adv,r:risk?adv/risk:null};}
 function applyTheme(){document.body.classList.toggle('light',settings.theme==='light');}
 function shareTradeImage(id){const t=trades.find(x=>x.id===id);if(!t)return;const p=pnlOf(t),r=rMultiple(t);
   const light=settings.theme==='light';const W=920,H=480,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
@@ -2426,7 +2429,7 @@ $('savePb').onclick=savePbEntry;$('pb_delete').onclick=deletePbEntry;
 // risk calculator
 $('closeCalc').onclick=()=>$('calcOverlay').classList.remove('open');
 document.querySelectorAll('#rc_dir button').forEach(b=>b.onclick=()=>rcDirSet(b.dataset.dir));
-['rc_acct','rc_risk','rc_entry','rc_stop'].forEach(id=>$(id).addEventListener('input',calcCompute));
+['rc_acct','rc_risk','rc_entry','rc_stop','rc_sym'].forEach(id=>$(id).addEventListener('input',calcCompute));
 // goals
 $('closeGoals').onclick=()=>$('goalsOverlay').classList.remove('open');$('cancelGoals').onclick=()=>$('goalsOverlay').classList.remove('open');$('saveGoals').onclick=saveGoalsForm;
 $('closeMs').onclick=()=>$('msOverlay').classList.remove('open');$('cancelMs').onclick=()=>$('msOverlay').classList.remove('open');
