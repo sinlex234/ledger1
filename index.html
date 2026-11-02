@@ -63,7 +63,9 @@
   .auth-form .btn{width:100%;justify-content:center}
   .btn.google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
   .btn.google svg{width:18px;height:18px}
-  .gsi-btn{justify-content:center;min-height:44px;width:100%}
+  .gsi-btn{justify-content:center;min-height:44px;width:100%;color-scheme:light}
+  .gsi-btn>div{flex:none;width:100%!important}
+  .gsi-btn iframe{width:calc(100% + 20px)!important;max-width:none!important}
   .auth-or{display:flex;align-items:center;gap:12px;color:var(--muted2);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;margin:4px 0}
   .auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:var(--line2)}
   .auth-msg{font-size:13px;line-height:1.5;border-radius:10px;padding:10px 12px;display:none}
@@ -1038,8 +1040,8 @@ async function mountGoogleButton(){
     google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,nonce:await sha256hex(raw),ux_mode:'popup',itp_support:true,use_fedcm_for_button:true,
       callback:async r=>{authMsg('authMsg','Signing you in…','ok');const {error}=await sb.auth.signInWithIdToken({provider:'google',token:r.credential,nonce:raw});if(error)authMsg('authMsg',friendlyAuthError(error));}});
     const box=$('gsiBtn');box.style.display='flex';$('googleBtn').style.display='none';gsiOn=true;
-    const w=Math.min(400,Math.max(200,Math.round(box.parentElement.getBoundingClientRect().width||320)));
-    box.innerHTML='';google.accounts.id.renderButton(box,{type:'standard',theme:(settings.theme||'dark')==='light'?'outline':'filled_black',size:'large',text:'continue_with',shape:'rectangular',logo_alignment:'center',width:w});
+    const w=Math.min(400,Math.max(200,Math.round(box.parentElement.offsetWidth||320)));
+    box.innerHTML='';box.dataset.w=w;google.accounts.id.renderButton(box,{type:'standard',theme:'outline',size:'large',text:'continue_with',shape:'rectangular',logo_alignment:'center',width:w});
   }catch(e){gsiOn=false;$('gsiBtn').style.display='none';}
 }
 function openAuth(){$('authSignedOut').style.display=authUser?'none':'block';$('authSignedIn').style.display=authUser?'block':'none';$('authReset').style.display='none';
