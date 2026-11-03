@@ -1038,7 +1038,7 @@ async function mountGoogleButton(){
     await loadGSI();
     const raw=[...crypto.getRandomValues(new Uint8Array(16))].map(x=>x.toString(16).padStart(2,'0')).join('');
     google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,nonce:await sha256hex(raw),ux_mode:'popup',itp_support:true,use_fedcm_for_button:true,
-      callback:async r=>{authMsg('authMsg','Signing you in…','ok');const {error}=await sb.auth.signInWithIdToken({provider:'google',token:r.credential,nonce:raw});if(error)authMsg('authMsg',friendlyAuthError(error));}});
+      callback:async r=>{authMsg('authMsg','Signing you in…','ok');try{const {error}=await sb.auth.signInWithIdToken({provider:'google',token:r.credential,nonce:raw});if(error)return authMsg('authMsg',friendlyAuthError(error));authMsg('authMsg','');$('authOverlay').classList.remove('open');renderAuthBtn();}catch(e){authMsg('authMsg',friendlyAuthError(e));}}});
     const box=$('gsiBtn');box.style.display='flex';$('googleBtn').style.display='none';gsiOn=true;
     const w=Math.min(400,Math.max(200,Math.round(box.parentElement.offsetWidth||320)));
     box.innerHTML='';box.dataset.w=w;google.accounts.id.renderButton(box,{type:'standard',theme:'outline',size:'large',text:'continue_with',shape:'rectangular',logo_alignment:'center',width:w});
