@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..800,0..100,0..1&family=Archivo:wght@400..800&family=Geist+Mono:wght@400..700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>
 <style>
@@ -35,7 +35,7 @@
     background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
     background-size:44px 44px;opacity:.4;mask-image:radial-gradient(ellipse 100% 80% at 50% 0%,black,transparent 75%);}
   .wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:26px 22px 80px}
-  .mono{font-family:'JetBrains Mono',monospace}
+  .mono{font-family:'Geist Mono',monospace}
   .pos{color:var(--green)} .neg{color:var(--red)} .neu{color:var(--muted)}
 
   header{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px}
@@ -44,7 +44,7 @@
     background:linear-gradient(150deg,#2a1f14,#191209);border:1px solid var(--line2);
     box-shadow:0 0 0 1px rgba(210,163,95,.06),inset 0 1px 0 rgba(255,236,200,.05)}
   .logo svg{width:23px;height:23px}
-  .brand h1{font-family:'Fraunces';font-weight:800;font-size:23px;letter-spacing:.14em;margin:0;line-height:1;color:var(--cream)}
+  .brand h1{font-family:'Fraunces';font-weight:700;font-size:23px;letter-spacing:.14em;margin:0;line-height:1;color:var(--cream)}
   .brand .sub{font-size:11.5px;color:var(--muted);letter-spacing:.22em;text-transform:uppercase;margin-top:5px}
   .hbtns{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   /* ---------- accounts ---------- */
@@ -61,6 +61,10 @@
   .auth-tabs button.on{background:var(--surface2);color:var(--cream);box-shadow:inset 0 0 0 1px var(--line2)}
   .auth-form{display:flex;flex-direction:column;gap:13px}
   .auth-form .btn{width:100%;justify-content:center}
+  /* Type quality: smooth rendering, clean Fraunces (no quirky alternates), even-width numbers */
+  html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
+  .brand h1,.card-h h3,.toolbar .t-title,.grade,.empty h3,.gs-num,.gs-title,.modal-h h2,.gauge .gnum{font-variation-settings:"SOFT" 0,"WONK" 0;font-optical-sizing:auto}
+  .mono,.kpi .k-val,.kpi .k-sub,.srow .s-v,.wl-legend,tbody td,.sym,.cal-cell .cal-d,.cal-pnl,.hm-lbl,.hm-h,.bd-sub,.jcard .jdate,.pb-stats .v,.calcstrip .cv,.d-pnl,.d-cell .v,.ycell .yp{font-variant-numeric:tabular-nums}
   .btn.google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
   .btn.google svg{width:18px;height:18px}
   .gsi-btn{justify-content:center;min-height:44px;width:100%;color-scheme:light}
@@ -104,26 +108,26 @@
   .kpi{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;position:relative;overflow:hidden}
   .kpi::after{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent,var(--muted2));opacity:.7}
   .kpi .k-lbl{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-  .kpi .k-val{font-family:'JetBrains Mono';font-weight:700;font-size:23px;margin-top:9px;line-height:1;letter-spacing:-.5px}
-  .kpi .k-sub{font-size:11.5px;color:var(--muted2);margin-top:7px;font-family:'JetBrains Mono'}
+  .kpi .k-val{font-family:'Geist Mono';font-weight:600;font-size:23px;margin-top:9px;line-height:1;letter-spacing:-.03em}
+  .kpi .k-sub{font-size:11.5px;color:var(--muted2);margin-top:7px;font-family:'Geist Mono'}
 
   .panels{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;margin-bottom:14px}
   .card{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:18px}
   .card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px}
-  .card-h h3{font-family:'Fraunces';font-weight:700;font-size:17px;margin:0;letter-spacing:.01em;color:var(--cream)}
+  .card-h h3{font-family:'Fraunces';font-weight:600;font-size:17px;margin:0;letter-spacing:-.005em;color:var(--cream)}
   .card-h .tag{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
   .chartbox{height:268px;position:relative}
 
   .stat-rows{display:flex;flex-direction:column}
   .srow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}
   .srow:last-child{border-bottom:none}
-  .srow .s-l{font-size:13px;color:var(--muted)} .srow .s-v{font-family:'JetBrains Mono';font-weight:600;font-size:14px}
+  .srow .s-l{font-size:13px;color:var(--muted)} .srow .s-v{font-family:'Geist Mono';font-weight:600;font-size:14px}
   .wlbar{height:9px;border-radius:6px;background:var(--red-dim);overflow:hidden;margin:6px 0 16px;display:flex}
   .wlbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#86a653)}
-  .wl-legend{display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:12px;margin-top:-10px;margin-bottom:8px}
+  .wl-legend{display:flex;justify-content:space-between;font-family:'Geist Mono';font-size:12px;margin-top:-10px;margin-bottom:8px}
 
   .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 12px}
-  .toolbar .t-title{font-family:'Fraunces';font-weight:700;font-size:18px;margin-right:auto;color:var(--cream)}
+  .toolbar .t-title{font-family:'Fraunces';font-weight:600;font-size:18px;margin-right:auto;color:var(--cream)}
   select,input,textarea{font-family:'Archivo';background:var(--surface);border:1px solid var(--line2);color:var(--text);border-radius:10px;padding:9px 11px;font-size:13px;outline:none;transition:border-color .15s}
   select:focus,input:focus,textarea:focus{border-color:var(--gold)}
   select{cursor:pointer;padding-right:28px;-webkit-appearance:none;appearance:none;
@@ -134,12 +138,12 @@
   table{width:100%;border-collapse:collapse;min-width:900px}
   thead th{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted2);font-weight:600;text-align:right;padding:13px 14px;border-bottom:1px solid var(--line2);white-space:nowrap;background:var(--bg2)}
   thead th:first-child,thead th.l{text-align:left}
-  tbody td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:right;font-family:'JetBrains Mono';font-size:13px;white-space:nowrap}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:right;font-family:'Geist Mono';font-size:13px;white-space:nowrap}
   tbody td.l{text-align:left;font-family:'Archivo'}
   tbody tr{transition:background .12s;cursor:pointer}
   tbody tr:hover{background:rgba(202,162,108,.05)}
   tbody tr:last-child td{border-bottom:none}
-  .sym{font-family:'JetBrains Mono';font-weight:700;letter-spacing:.02em}
+  .sym{font-family:'Geist Mono';font-weight:700;letter-spacing:.02em}
   .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;text-transform:uppercase;font-family:'Archivo'}
   .pill.long{background:var(--green-dim);color:var(--green)} .pill.short{background:var(--red-dim);color:var(--red)}
   .setup-tag{font-family:'Archivo';font-size:11.5px;color:var(--muted);background:rgba(202,162,108,.1);padding:3px 8px;border-radius:6px}
@@ -154,7 +158,7 @@
 
   .empty{padding:60px 20px;text-align:center}
   .empty svg{width:46px;height:46px;color:var(--muted2);margin-bottom:14px}
-  .empty h3{font-family:'Fraunces';font-size:22px;margin:0 0 8px;color:var(--cream)}
+  .empty h3{font-family:'Fraunces';font-weight:600;font-size:22px;margin:0 0 8px;color:var(--cream)}
   .empty p{color:var(--muted);font-size:14px;max-width:440px;margin:0 auto 22px;line-height:1.55}
   .empty .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
@@ -169,9 +173,9 @@
   .cal-row{display:contents}
   .cal-cell{min-height:76px;border:1px solid var(--line);border-radius:10px;padding:7px 8px;display:flex;flex-direction:column;gap:2px;background:var(--bg2)}
   .cal-cell.empty{background:transparent;border-color:transparent}
-  .cal-cell .cal-d{font-family:'JetBrains Mono';font-size:11px;color:var(--muted2)}
+  .cal-cell .cal-d{font-family:'Geist Mono';font-size:11px;color:var(--muted2)}
   .cal-cell.filled .cal-d{color:var(--text)}
-  .cal-pnl{font-family:'JetBrains Mono';font-weight:700;font-size:14px;margin-top:auto}
+  .cal-pnl{font-family:'Geist Mono';font-weight:700;font-size:14px;margin-top:auto}
   .cal-n{font-size:10.5px;color:var(--muted2)}
   .cal-cell.wk{background:transparent;border-style:dashed;justify-content:flex-end}
   .cal-cell.wk .cal-wk-l{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:auto}
@@ -181,8 +185,8 @@
   .bd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
   .hm-grid{overflow-x:auto;padding-bottom:4px}
   .hm-row{display:flex;align-items:center;gap:3px;margin-bottom:3px}
-  .hm-lbl{width:34px;flex:none;font-size:10.5px;color:var(--muted2);font-family:'JetBrains Mono'}
-  .hm-h{width:22px;flex:none;text-align:center;font-size:9px;color:var(--muted2);font-family:'JetBrains Mono'}
+  .hm-lbl{width:34px;flex:none;font-size:10.5px;color:var(--muted2);font-family:'Geist Mono'}
+  .hm-h{width:22px;flex:none;text-align:center;font-size:9px;color:var(--muted2);font-family:'Geist Mono'}
   .hm-cell{width:22px;height:20px;flex:none;border-radius:4px;background:rgba(202,162,108,.04)}
   .hm-head{margin-bottom:6px}
   .insight-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.5}
@@ -205,7 +209,7 @@
   .guide-step:last-child{border-bottom:none}
   .gs-num{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-family:'Fraunces';font-weight:800;font-size:15px;color:var(--gold);flex:none;margin-top:2px}
   .gs-body{flex:1}
-  .gs-title{font-family:'Fraunces';font-weight:700;font-size:16px;color:var(--cream);margin-bottom:6px}
+  .gs-title{font-family:'Fraunces';font-weight:600;font-size:16px;color:var(--cream);margin-bottom:6px}
   .gs-text{font-size:13.5px;color:var(--muted);line-height:1.6}
   .guide-cols{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .gcol{padding:6px 11px;border-radius:8px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
@@ -216,7 +220,7 @@
   .guide-step:last-child{border-bottom:none}
   .gs-num{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-family:'Fraunces';font-weight:800;font-size:15px;color:var(--gold);flex:none;margin-top:2px}
   .gs-body{flex:1}
-  .gs-title{font-family:'Fraunces';font-weight:700;font-size:16px;color:var(--cream);margin-bottom:6px}
+  .gs-title{font-family:'Fraunces';font-weight:600;font-size:16px;color:var(--cream);margin-bottom:6px}
   .gs-text{font-size:13.5px;color:var(--muted);line-height:1.6}
   .guide-cols{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .gcol{padding:6px 11px;border-radius:8px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
@@ -241,7 +245,7 @@
   .bd-bar i.down{background:linear-gradient(90deg,var(--red),#a8472f)}
   .bd-meta{text-align:right;display:flex;flex-direction:column;gap:1px}
   .bd-meta .mono{font-weight:700;font-size:13px}
-  .bd-sub{font-size:10.5px;color:var(--muted2);font-family:'JetBrains Mono'}
+  .bd-sub{font-size:10.5px;color:var(--muted2);font-family:'Geist Mono'}
   .bd-empty{color:var(--muted2);font-size:13px;padding:18px 0;text-align:center}
 
   /* journal + playbook cards */
@@ -250,7 +254,7 @@
   .jcard{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:border-color .15s}
   .jcard:hover{border-color:var(--line2)}
   .jcard .jh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
-  .jcard .jdate{font-family:'JetBrains Mono';font-size:13px;color:var(--cream);font-weight:600}
+  .jcard .jdate{font-family:'Geist Mono';font-size:13px;color:var(--cream);font-weight:600}
   .jcard .jtext{font-size:13px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .mood{font-size:11.5px;padding:3px 9px;border-radius:7px;font-weight:600}
   .m0{background:#2c3618;color:#bfe08a}.m1{background:#33371a;color:#cdd97f}.m2{background:rgba(202,162,108,.12);color:var(--muted)}.m3{background:#3a2516;color:#e0a06a}.m4{background:var(--red-dim);color:var(--red)}
@@ -260,7 +264,7 @@
   .pb-stats{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
   .pb-stats div{display:flex;flex-direction:column;gap:2px}
   .pb-stats .l{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2)}
-  .pb-stats .v{font-family:'JetBrains Mono';font-weight:700;font-size:14px}
+  .pb-stats .v{font-family:'Geist Mono';font-weight:700;font-size:14px}
 
   /* modal */
   .overlay{position:fixed;inset:0;z-index:50;background:rgba(10,7,4,.74);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:36px 16px;overflow-y:auto}
@@ -269,7 +273,7 @@
   .modal.wide{max-width:720px}
   @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1}}
   .modal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-  .modal-h h2{font-family:'Fraunces';font-weight:700;font-size:21px;margin:0;color:var(--cream)}
+  .modal-h h2{font-family:'Fraunces';font-weight:600;font-size:21px;margin:0;color:var(--cream)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
   .field{display:flex;flex-direction:column;gap:6px} .field.full{grid-column:1/-1}
   .field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -281,7 +285,7 @@
   .calcstrip{display:flex;gap:18px;margin:16px 0 4px;padding:13px 15px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;flex-wrap:wrap}
   .calcstrip div{display:flex;flex-direction:column;gap:3px}
   .calcstrip .cl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2)}
-  .calcstrip .cv{font-family:'JetBrains Mono';font-weight:700;font-size:15px}
+  .calcstrip .cv{font-family:'Geist Mono';font-weight:700;font-size:15px}
   .modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
   .err{color:var(--red);font-size:12.5px;margin-top:6px;min-height:16px}
   .shotwrap{display:flex;flex-direction:column;gap:8px}
@@ -292,11 +296,11 @@
 
   /* detail */
   .d-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-  .d-pnl{font-family:'JetBrains Mono';font-weight:700;font-size:26px}
+  .d-pnl{font-family:'Geist Mono';font-weight:700;font-size:26px}
   .d-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
   .d-cell{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
   .d-cell .l{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2)}
-  .d-cell .v{font-family:'JetBrains Mono';font-weight:600;font-size:14px;margin-top:4px}
+  .d-cell .v{font-family:'Geist Mono';font-weight:600;font-size:14px;margin-top:4px}
   .d-sec{margin-bottom:14px}
   .d-sec h4{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted2);margin:0 0 7px}
   .d-sec p{margin:0;font-size:13.5px;color:var(--text);line-height:1.55;white-space:pre-wrap}
@@ -341,7 +345,7 @@
   /* zella score */
   .score-wrap{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
   .gauge{position:relative;width:160px;height:92px;flex:none}
-  .gauge .gnum{position:absolute;left:0;right:0;top:30px;text-align:center;font-family:'Fraunces';font-weight:800;font-size:36px;color:var(--cream);line-height:1}
+  .gauge .gnum{position:absolute;left:0;right:0;top:30px;text-align:center;font-family:'Fraunces';font-weight:600;letter-spacing:-.02em;font-size:36px;color:var(--cream);line-height:1}
   .gauge .glbl{position:absolute;left:0;right:0;top:70px;text-align:center;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
   .score-comps{display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:11px 24px;flex:1;min-width:260px}
   .scomp .sc-h{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:5px}
@@ -355,7 +359,7 @@
   .ycell{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg2);cursor:pointer;min-height:62px;display:flex;flex-direction:column;gap:3px}
   .ycell:hover{border-color:var(--line2)}
   .ycell .ym{font-size:11px;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase}
-  .ycell .yp{font-family:'JetBrains Mono';font-weight:700;font-size:15px;margin-top:auto}
+  .ycell .yp{font-family:'Geist Mono';font-weight:700;font-size:15px;margin-top:auto}
   .ycell .yn{font-size:10px;color:var(--muted2)}
 
   .tm-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
@@ -603,7 +607,7 @@
   <div class="modal-h"><h2>Map Columns</h2>
     <button class="iconbtn" id="closeMap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
   <span class="hint" style="display:block;margin-bottom:12px">Crema couldn't auto-detect your columns. Tell it which column is which — leave blank if that field isn't in your file. Required: Symbol, Entry, Exit, Size.</span>
-  <div id="mapPreview" style="margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;overflow-x:auto;white-space:nowrap;color:var(--muted)"></div>
+  <div id="mapPreview" style="margin-bottom:14px;font-family:'Geist Mono',monospace;font-size:11.5px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;overflow-x:auto;white-space:nowrap;color:var(--muted)"></div>
   <div class="grid2" id="mapFields"></div>
   <div class="err" id="mapErr"></div>
   <div class="modal-foot"><button class="btn" id="cancelMap">Cancel</button><button class="btn primary" id="applyMap">Import with these columns</button></div>
@@ -614,7 +618,7 @@
   <div class="modal-h"><h2>Paste Trade Data</h2>
     <button class="iconbtn" id="closePaste"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
   <span class="hint" style="display:block;margin-bottom:10px">Copy your TradingView <b>Order History</b> table (or a Crema CSV export) and paste it below — header row included. Works with tab- or comma-separated data. <button onclick="$('pasteOverlay').classList.remove('open');openGuide('export')" style="background:none;border:none;color:var(--gold);font-weight:600;cursor:pointer;font-size:12px;padding:0">Not sure how? See the guide →</button></span>
-  <textarea id="paste_text" rows="12" placeholder="Symbol	Side	Qty	Fill Price	Closing Time&#10;BTCUSD	Buy	0.5	64200	2026-05-01 09:35:00&#10;…" style="font-family:'JetBrains Mono',monospace;font-size:12px"></textarea>
+  <textarea id="paste_text" rows="12" placeholder="Symbol	Side	Qty	Fill Price	Closing Time&#10;BTCUSD	Buy	0.5	64200	2026-05-01 09:35:00&#10;…" style="font-family:'Geist Mono',monospace;font-size:12px"></textarea>
   <div class="modal-foot"><button class="btn" id="cancelPaste">Cancel</button><button class="btn primary" id="parsePaste">Parse &amp; Import</button></div>
 </div></div>
 
@@ -1386,7 +1390,7 @@ function rollingChartCard(list){
 function drawRollingChart(list){
   const cv=$('cRolling');if(!cv)return;
   const pts=rollingStats(list,20);
-  const axis='#897560',grid='rgba(202,162,108,.08)',mono={family:'JetBrains Mono',size:10};
+  const axis='#897560',grid='rgba(202,162,108,.08)',mono={family:'Geist Mono',size:10};
   if(rollingChart)rollingChart.destroy();
   rollingChart=new Chart(cv.getContext('2d'),{
     type:'line',
@@ -1395,7 +1399,7 @@ function drawRollingChart(list){
       {label:'Avg R',data:pts.map(p=>p.avgR),borderColor:'#d2a35f',borderWidth:2,tension:.3,pointRadius:0,pointHoverRadius:4,yAxisID:'r',borderDash:[5,3]},
     ]},
     options:{responsive:true,maintainAspectRatio:false,animation:{duration:400},
-      plugins:{legend:{display:true,labels:{color:axis,font:mono,boxWidth:12,padding:12}},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:9,titleColor:axis,bodyColor:'#efe4d2',bodyFont:{family:'JetBrains Mono',weight:'700'}}},
+      plugins:{legend:{display:true,labels:{color:axis,font:mono,boxWidth:12,padding:12}},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:9,titleColor:axis,bodyColor:'#efe4d2',bodyFont:{family:'Geist Mono',weight:'700'}}},
       scales:{
         x:{grid:{display:false},ticks:{color:axis,font:mono,maxTicksLimit:10}},
         wr:{position:'left',grid:{color:grid},ticks:{color:'#aecd7a',font:mono,callback:v=>v.toFixed(0)+'%'},title:{display:true,text:'Win rate',color:'#aecd7a',font:mono}},
@@ -1675,8 +1679,8 @@ let rCharts=[];
 function newChart(id,cfg){const cv=$(id);if(!cv)return;if(rCharts.length>20)return;const c=new Chart(cv.getContext('2d'),cfg);rCharts.push(c);}
 function drawReportCharts(list){
   rCharts.forEach(c=>{try{c.destroy();}catch(e){}});rCharts=[];
-  const grid='rgba(202,162,108,.08)',axis='#897560',mono={family:'JetBrains Mono',size:10};
-  const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:9,titleColor:'#897560',bodyColor:'#efe4d2',bodyFont:{family:'JetBrains Mono',weight:'700'}}},scales:{x:{grid:{display:false},ticks:{color:axis,font:mono,maxTicksLimit:12}},y:{grid:{color:grid},ticks:{color:axis,font:mono}}}};
+  const grid='rgba(202,162,108,.08)',axis='#897560',mono={family:'Geist Mono',size:10};
+  const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:9,titleColor:'#897560',bodyColor:'#efe4d2',bodyFont:{family:'Geist Mono',weight:'700'}}},scales:{x:{grid:{display:false},ticks:{color:axis,font:mono,maxTicksLimit:12}},y:{grid:{color:grid},ticks:{color:axis,font:mono}}}};
   // monthly P&L bars
   const mon=monthStats(list).slice().sort((a,b)=>a.key<b.key?-1:1);
   newChart('cMonthly',{type:'bar',data:{labels:mon.map(m=>m.key),datasets:[{data:mon.map(m=>m.net),backgroundColor:mon.map(m=>m.net>=0?'#aecd7a':'#dd7d5e'),borderRadius:4}]},options:{...base,plugins:{...base.plugins,tooltip:{...base.plugins.tooltip,callbacks:{label:c=>'  '+money(c.parsed.y)}}}}});
@@ -1933,7 +1937,7 @@ function renderMistakes(){
     <div class="toolbar" style="margin-top:0"><span class="t-title">Lessons Learned</span><span class="tag" style="color:var(--muted2)">${lessons.length} entries</span></div>
     <div class="jp-grid" style="margin-bottom:14px">
       ${lessons.map(l=>`<div class="jcard" data-open-trade="${l.id}">
-        <div class="jh"><span class="jdate" style="font-family:'JetBrains Mono'">${l.date||'—'} · <span class="sym">${esc(l.symbol||'—')}</span></span>
+        <div class="jh"><span class="jdate" style="font-family:'Geist Mono'">${l.date||'—'} · <span class="sym">${esc(l.symbol||'—')}</span></span>
         <span class="mono ${cls(l.pnl)}">${moneyShort(l.pnl)}</span></div>
         <div class="jtext">${esc(l.lesson)}</div>
       </div>`).join('')}
@@ -2065,9 +2069,9 @@ function drawChart(list){const cv=$('equity');if(!cv)return;const ctx=cv.getCont
   if(chart)chart.destroy();
   chart=new Chart(ctx,{type:'line',data:{labels,datasets},
     options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:10,titleColor:'#897560',bodyColor:'#efe4d2',bodyFont:{family:'JetBrains Mono',weight:'700'},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#17110a',borderColor:'rgba(202,162,108,.3)',borderWidth:1,padding:10,titleColor:'#897560',bodyColor:'#efe4d2',bodyFont:{family:'Geist Mono',weight:'700'},
         callbacks:{title:i=>i[0].label,label:c=>{if(c.datasetIndex===1){const ms=milesByIdx[c.dataIndex]||[];return ms.map(m=>'📍 '+m.label);}return '  '+money(c.parsed.y);}}}},
-      scales:{x:{grid:{display:false},ticks:{color:'#897560',maxTicksLimit:8,font:{family:'JetBrains Mono',size:10}}},y:{grid:{color:'rgba(202,162,108,.08)'},ticks:{color:'#897560',font:{family:'JetBrains Mono',size:10},callback:v=>cur()+v.toLocaleString()}}}}});
+      scales:{x:{grid:{display:false},ticks:{color:'#897560',maxTicksLimit:8,font:{family:'Geist Mono',size:10}}},y:{grid:{color:'rgba(202,162,108,.08)'},ticks:{color:'#897560',font:{family:'Geist Mono',size:10},callback:v=>cur()+v.toLocaleString()}}}}});
 }
 
 /* ---------- trade detail ---------- */
@@ -2080,7 +2084,7 @@ function openDetail(id){const t=trades.find(x=>x.id===id);if(!t)return;detailId=
     <div class="d-top"><span class="d-pnl ${cls(p)}">${money(p)}</span>
       ${r!==null?`<span class="mono ${cls(r)}">${(r>=0?'+':'')+r.toFixed(2)}R</span>`:''}
       ${t.grade?`<span class="grade g${t.grade}">${t.grade}</span>`:''}
-      <span style="color:var(--muted2);margin-left:auto;font-family:'JetBrains Mono';font-size:12px">${t.date||''}</span></div>
+      <span style="color:var(--muted2);margin-left:auto;font-family:'Geist Mono';font-size:12px">${t.date||''}</span></div>
     <div class="d-grid">
       <div class="d-cell"><div class="l">Entry</div><div class="v">${fmtPrice(t.entry)}</div></div>
       <div class="d-cell"><div class="l">Exit</div><div class="v">${fmtPrice(t.exit)}</div></div>
