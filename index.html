@@ -65,6 +65,61 @@
   html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-kerning:normal}
   .brand h1,.card-h h3,.toolbar .t-title,.grade,.empty h3,.gs-num,.gs-title,.modal-h h2,.gauge .gnum{font-variation-settings:"SOFT" 0,"WONK" 0;font-optical-sizing:auto}
   .mono,.kpi .k-val,.kpi .k-sub,.srow .s-v,.wl-legend,tbody td,.sym,.cal-cell .cal-d,.cal-pnl,.hm-lbl,.hm-h,.bd-sub,.jcard .jdate,.pb-stats .v,.calcstrip .cv,.d-pnl,.d-cell .v,.ycell .yp{font-variant-numeric:tabular-nums}
+  /* Profile, questions and badges */
+  .acct-av img,.pf-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+  .acct-av{overflow:hidden}
+  .acct-bd{display:inline-flex;gap:2px;color:var(--gold)}
+  .acct-bd svg{width:13px;height:13px}
+  .pq-q{margin:0 0 16px}
+  .pq-t{font-weight:600;color:var(--cream);font-size:14px;margin-bottom:9px}
+  .pq-t .hint{font-weight:400;margin-left:4px}
+  .pq-opts{display:flex;flex-wrap:wrap;gap:8px}
+  .pq-o{padding:9px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line2);color:var(--muted);font:500 13px 'Archivo',sans-serif;cursor:pointer;transition:all .15s}
+  .pq-o:hover{color:var(--text);border-color:var(--caramel)}
+  .pq-o.on{background:rgba(210,163,95,.16);border-color:var(--gold);color:var(--cream)}
+  .pf-wrap{display:flex;flex-direction:column;gap:14px}
+  .pf-head{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
+  .pf-av{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,var(--gold),#8a5d2c);color:#1c1207;font:700 30px 'Fraunces',serif;overflow:hidden;flex:none}
+  .pf-av.lg{width:64px;height:64px;font-size:26px}
+  .pf-name{font:600 24px 'Fraunces',serif;color:var(--cream);letter-spacing:-.01em;font-variation-settings:"SOFT" 0,"WONK" 0}
+  .pf-bio{color:var(--text);font-size:14px;line-height:1.55;margin-top:4px;max-width:60ch}
+  .pf-bio.muted{color:var(--muted2)}
+  .pf-feat{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pf-feat:empty{display:none}
+  .pf-fb svg{width:13px;height:13px}
+  .pf-fb{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;background:rgba(210,163,95,.12);border:1px solid rgba(210,163,95,.35);color:var(--cream)}
+  .pf-ans{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+  .pf-chip{font-size:11.5px;padding:4px 9px;border-radius:7px;background:var(--surface2);color:var(--muted)}
+  .pf-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .pf-count{text-align:right;line-height:1.1}
+  .pf-count b{display:block;font:600 30px 'Fraunces',serif;color:var(--gold);font-variation-settings:"SOFT" 0,"WONK" 0}
+  .pf-count span{font-size:12px;color:var(--muted)}
+  .pf-form{display:flex;flex-direction:column;gap:14px;max-width:520px}
+  .pf-photo{display:flex;align-items:center;gap:14px}
+  .pf-nudge{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .pf-nudge b{color:var(--cream)}
+  .cbg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+  .cbg{display:flex;gap:12px;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--surface);opacity:.82}
+  .cbg.got{opacity:1;border-color:rgba(210,163,95,.45);background:linear-gradient(160deg,rgba(210,163,95,.10),var(--surface));cursor:pointer}
+  .cbg.got:hover{border-color:var(--gold)}
+  .cbg-ic{width:38px;height:38px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:17px;background:var(--surface2);color:var(--muted)}
+  .cbg.got .cbg-ic{background:linear-gradient(140deg,var(--gold),#9b6b34);color:#1c1207}
+  .cbg-tx{min-width:0;flex:1}
+  .cbg-nm{font-weight:600;color:var(--cream);font-size:13.5px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .cbg-for,.cbg-pin{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:5px}
+  .cbg-for{background:rgba(174,205,122,.14);color:var(--green)}
+  .cbg-pin{background:rgba(210,163,95,.18);color:var(--gold)}
+  .cbg-fcard{border-color:rgba(210,163,95,.45);background:linear-gradient(160deg,rgba(210,163,95,.12),var(--bg2) 60%)}
+  .cbg.fnd{border-color:var(--gold);background:linear-gradient(150deg,rgba(231,190,120,.22),rgba(155,107,52,.10) 55%,var(--surface))}
+  .cbg.fnd .cbg-ic{background:linear-gradient(140deg,#f3d39a,var(--gold) 45%,#8a5d2c);color:#1c1207;box-shadow:0 0 0 1px rgba(243,211,154,.5),0 6px 18px -6px rgba(210,163,95,.7)}
+  .cbg-fd{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:5px;background:linear-gradient(140deg,#f3d39a,var(--gold));color:#1c1207}
+  .cbg-ds{font-size:12px;color:var(--muted);line-height:1.45;margin-top:3px}
+  .cbg-tip{font-size:11.5px;color:var(--muted2);margin-top:4px;font-style:italic}
+  .cbg-bar{height:5px;border-radius:3px;background:var(--surface2);margin-top:9px;overflow:hidden}
+  .cbg-bar i{display:block;height:100%;background:linear-gradient(90deg,#9b6b34,var(--gold));border-radius:3px}
+  .cbg-pg{font:500 11px 'Geist Mono',monospace;color:var(--muted2);margin-top:5px;font-variant-numeric:tabular-nums}
+  .cbg-done{font-size:11.5px;color:var(--green);margin-top:7px;font-weight:600}
+  @media (max-width:640px){.pf-head{grid-template-columns:auto 1fr}.pf-side{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}.pf-count{text-align:left}.pf-av{width:60px;height:60px;font-size:24px}}
   .btn.google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
   .btn.google svg{width:18px;height:18px}
   .gsi-btn{justify-content:center;min-height:44px;width:100%;color-scheme:light}
@@ -820,8 +875,17 @@
         <div style="display:flex;gap:8px"><input type="text" id="acctUser" maxlength="20" placeholder="Pick a username" style="flex:1"><button class="btn" id="acctUserSave">Save</button></div>
         <span class="hint" id="acctUserHint">Lets you sign in with your username instead of your email.</span></div>
     </div>
-    <div class="modal-foot" style="justify-content:space-between"><button class="btn" id="syncNowBtn">Sync now</button><button class="btn danger" id="signOutBtn">Sign out</button></div>
+    <div class="modal-foot" style="justify-content:space-between"><button class="btn primary" id="acctProfileBtn">Profile &amp; badges</button><button class="btn" id="syncNowBtn">Sync now</button><button class="btn danger" id="signOutBtn">Sign out</button></div>
   </div>
+</div></div>
+
+<!-- Sign-up questions -->
+<div class="overlay" id="pqOverlay"><div class="modal" style="max-width:520px">
+  <div class="modal-h"><h2 id="pqTitle">Make Crema yours</h2></div>
+  <p class="hint" id="pqIntro" style="margin:-4px 0 18px;font-size:13px"></p>
+  <div id="pqBody"></div>
+  <div class="hint" id="pqMsg" style="color:var(--red)"></div>
+  <div class="modal-foot"><button class="btn" id="pqSkip">Skip for now</button><button class="btn primary" id="pqSave">Save</button></div>
 </div></div>
 
 <!-- Settings Modal -->
@@ -853,7 +917,7 @@
       <span class="hint">Imports TradingView, plus MT4/5, Tradovate, NinjaTrader and similar order-history CSVs — fills are paired into trades automatically. Backup saves everything together.</span></div>
     <button class="btn danger" id="clearBtn">Delete all trades</button>
   </div>
-  <div class="modal-foot"><button class="btn primary" id="saveSettings">Save</button></div>
+  <div class="modal-foot" style="justify-content:space-between"><button class="btn" id="settingsProfileBtn">Profile &amp; badges</button><button class="btn primary" id="saveSettings">Save</button></div>
 </div></div>
 
 <script>
@@ -955,7 +1019,7 @@ try{if(SUPABASE_URL&&SUPABASE_ANON_KEY&&window.supabase)sb=window.supabase.creat
 const redirectURL=()=>location.origin+location.pathname;
 
 function markDirty(k){if(!authUser||syncedFor!==authUser.id)return;dirty.add(k);lsSet(K_DIRTY,JSON.stringify([...dirty]));setSync('busy');clearTimeout(pushTimer);pushTimer=setTimeout(pushDirty,900);}
-function setSync(st,note){syncState=st;if(note!==undefined)syncNote=note;renderAuthBtn();renderAcctPanel();}
+function setSync(st,note){syncState=st;if(note!==undefined)syncNote=note;renderAuthBtn();renderAcctPanel();if(st==='ok'&&authUser)maybeAskQuestions();}
 async function pushDirty(){
   if(!sb||!authUser||!dirty.size){if(authUser&&!dirty.size&&syncState!=='err')setSync('ok');return true;}
   clearTimeout(retryTimer);
@@ -1010,11 +1074,12 @@ async function loadProfile(){if(!sb||!authUser)return;const {data}=await sb.from
 function displayName(){const u=authProfile&&authProfile.username;const md=(authUser&&authUser.user_metadata)||{};return u||md.full_name||md.name||(authUser&&authUser.email)||'Account';}
 function renderAuthBtn(){const b=$('authBtn');if(!b)return;if(!sb){b.classList.remove('show');return;}b.classList.add('show');
   if(!authUser){b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Sign in';b.title='Sign in or create an account';return;}
-  const n=displayName();const dot=syncState==='ok'?'ok':syncState==='err'?'err':syncState==='busy'?'busy':'';
-  b.innerHTML=`<span class="acct-av">${esc(n.charAt(0))}</span><span class="acct-nm">${esc(n.length>18?n.slice(0,17)+'…':n)}</span><span class="sync-dot ${dot}"></span>`;
+  const n=((settings.profile&&settings.profile.name)||'').trim()||displayName();const dot=syncState==='ok'?'ok':syncState==='err'?'err':syncState==='busy'?'busy':'';
+  const fb=(settings.profile&&settings.profile.showcase||[]).length?(()=>{try{const B=cremaBadges();return settings.profile.showcase.map(id=>B.find(x=>x.id===id&&x.earned)).filter(Boolean).map(x=>bIcon(x.icon)).join('');}catch(e){return '';}})():'';
+  b.innerHTML=`${avatarHTML('acct-av')}<span class="acct-nm">${esc(n.length>18?n.slice(0,17)+'…':n)}</span>${fb?`<span class="acct-bd" title="Featured badges">${fb}</span>`:''}<span class="sync-dot ${dot}"></span>`;
   b.title=syncState==='ok'?'Synced':syncState==='err'?syncNote:'Syncing…';}
 function renderAcctPanel(){if(!authUser||!$('acctName'))return;const n=displayName();
-  $('acctAv').textContent=n.charAt(0);$('acctName').textContent=n;$('acctEmail').textContent=authUser.email||'';
+  if(settings.profile&&settings.profile.avatar)$('acctAv').innerHTML=`<img src="${settings.profile.avatar}" alt="">`;else $('acctAv').textContent=((settings.profile&&settings.profile.name)||n).charAt(0);$('acctName').textContent=n;$('acctEmail').textContent=authUser.email||'';
   $('acctDot').className='sync-dot '+(syncState==='ok'?'ok':syncState==='err'?'err':'busy');
   $('acctSyncTxt').textContent=syncState==='ok'?('All changes saved to your account'+(lastSyncAt?' · '+lastSyncAt.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):'')):syncState==='err'?syncNote:(syncNote||'Syncing…');
   if(document.activeElement!==$('acctUser'))$('acctUser').value=(authProfile&&authProfile.username)||'';}
@@ -1028,6 +1093,143 @@ function setAuthMode(mode){authMode=mode;authMsg('authMsg','');
   $('a_pass').autocomplete=up?'new-password':'current-password';$('a_pass').placeholder=up?'At least 8 characters':'••••••••';
   $('authSubmit').textContent=up?'Create account':fg?'Email me a reset link':'Sign in';
   $('authTabs').style.display=fg?'none':'flex';$('googleBtn').style.display=fg||gsiOn?'none':'flex';$('gsiBtn').style.display=fg||!gsiOn?'none':'flex';document.querySelector('#authSignedOut .auth-or').style.display=fg?'none':'flex';}
+
+/* ---------- Profile, sign-up questions and badges (Crema's own; stored in synced settings) ---------- */
+const PQ=[
+  {k:'markets',multi:true,q:'What do you trade?',hint:'Pick all that apply.',opts:[['futures','Futures'],['forex','Forex'],['stocks','Stocks'],['options','Options'],['crypto','Crypto']]},
+  {k:'accounts',multi:true,q:'Which accounts are you journaling?',hint:'Pick all that apply.',opts:[['paper','Paper / sim'],['funded','Funded challenge'],['live','Live money']]},
+  {k:'style',q:'How do you trade?',opts:[['scalp','Scalper'],['day','Day trader'],['swing','Swing trader']]},
+  {k:'goal',q:'Main goal right now?',opts:[['consistency','Build consistency'],['funded','Pass a funded challenge'],['discipline','Cut my mistakes'],['grow','Grow my account']]}
+];
+const FOUNDER_IDS=['4eba1508-999d-4c01-ba40-af77dbd28f57'];
+function isFounder(){return !!(authUser&&FOUNDER_IDS.includes(authUser.id));}
+function prof(){return settings.profile||(settings.profile={});}
+function profAnswers(){return prof().answers||null;}
+let pqOpen=false;
+function maybeAskQuestions(){if(pqOpen||profAnswers()||prof().skipped)return;if(!authUser&&!localStorage)return;setTimeout(()=>{if(!profAnswers()&&!prof().skipped&&!document.querySelector('.overlay.open'))openQuestions(false);},700);}
+function openQuestions(edit){pqOpen=true;const a=Object.assign({markets:[],accounts:[]},profAnswers()||{});
+  const body=PQ.map(q=>`<div class="pq-q"><div class="pq-t">${q.q}${q.hint?` <span class="hint">${q.hint}</span>`:''}</div><div class="pq-opts" data-k="${q.k}" data-multi="${q.multi?1:0}">${q.opts.map(([v,l])=>{const on=q.multi?(a[q.k]||[]).includes(v):a[q.k]===v;return `<button type="button" class="pq-o${on?' on':''}" data-v="${v}">${l}</button>`;}).join('')}</div></div>`).join('');
+  $('pqBody').innerHTML=body;$('pqTitle').textContent=edit?'Your trading':'Make Crema yours';
+  $('pqIntro').textContent=edit?'Change these anytime. Your badges follow your answers.':'Four quick questions so your badges fit the way you trade. Takes 20 seconds.';
+  $('pqSkip').textContent=edit?'Cancel':'Skip for now';
+  $('pqBody').querySelectorAll('.pq-opts').forEach(g=>g.querySelectorAll('.pq-o').forEach(b=>b.onclick=()=>{if(g.dataset.multi==='1')b.classList.toggle('on');else g.querySelectorAll('.pq-o').forEach(x=>x.classList.toggle('on',x===b));}));
+  $('pqOverlay').classList.add('open');}
+function closeQuestions(){pqOpen=false;$('pqOverlay').classList.remove('open');}
+async function saveQuestions(){const a={};$('pqBody').querySelectorAll('.pq-opts').forEach(g=>{const on=[...g.querySelectorAll('.pq-o.on')].map(b=>b.dataset.v);a[g.dataset.k]=g.dataset.multi==='1'?on:(on[0]||'');});
+  if(!a.markets.length&&!a.accounts.length&&!a.style&&!a.goal){$('pqMsg').textContent='Pick at least one answer, or skip for now.';return;}
+  const p=prof();p.answers=a;p.answeredAt=new Date().toISOString();delete p.skipped;await saveSettings();closeQuestions();if(view==='profile')render();}
+async function skipQuestions(){if($('pqSkip').textContent==='Skip for now'){prof().skipped=true;await saveSettings();}closeQuestions();}
+
+// ----- what counts toward badges -----
+const MKT_RE={futures:/^(M?ES|M?NQ|M?YM|RTY|M2K|M?CL|QM|NG|M?GC|SI|SIL|HG|PL|ZB|ZN|ZF|ZT|UB|6[ABCEJNS]|M6[AEB]|ZC|ZS|ZW|LE|HE|VX|BTC1!|MBT|MET)([FGHJKMNQUVXZ]\d{1,2})?(1!)?$/,forex:/^([A-Z]{3}[\/\-]?[A-Z]{3})$/,crypto:/(BTC|ETH|SOL|XRP|DOGE|ADA|AVAX|LINK|USDT|USDC|PEPE|BNB)/,options:/(\d+(\.\d+)?[CP]$|\s[CP]\s?\d|CALL|PUT|\d{6}[CP]\d)/};
+function mktOf(sym){const s=String(sym||'').toUpperCase().trim();if(!s)return '';if(MKT_RE.options.test(s))return 'options';if(MKT_RE.crypto.test(s))return 'crypto';if(MKT_RE.futures.test(s)||(settings.multipliers&&settings.multipliers[s.replace(/[FGHJKMNQUVXZ]\d{1,2}$/,'')]))return 'futures';if(MKT_RE.forex.test(s)&&/(USD|EUR|GBP|JPY|AUD|CAD|CHF|NZD)/.test(s))return 'forex';return 'stocks';}
+function acctKind(a){a=String(a||'').toLowerCase();if(/paper|sim|demo|practice|replay/.test(a))return 'paper';if(/fund|prop|eval|challenge|combine|topstep|apex|ftmo|tradeify|myfunded|e8|fxify|the5ers|lucid|bulenox|earn2trade|tpt/.test(a))return 'funded';if(a)return 'live';return '';}
+function tsOf(s){if(!s)return null;const d=new Date(String(s).replace(' ','T'));return isNaN(d)?null:d;}
+function profStats(){
+  const T=trades,S={n:T.length};
+  const dayNet={};T.forEach(t=>{if(t.date)dayNet[t.date]=(dayNet[t.date]||0)+pnlOf(t);});
+  const jdays=Object.keys(journal).filter(d=>journal[d]&&((journal[d].text||'').trim()||journal[d].mood));S.jdays=jdays.length;
+  // longest run of trading days (Mon-Fri) where you logged a trade or wrote in your journal
+  const act=new Set([...Object.keys(dayNet),...jdays]);const sorted=[...act].sort();let best=0,run=0,prev=null;
+  sorted.forEach(d=>{const dt=new Date(d+'T12:00');if(isNaN(dt))return;if(prev){let p=new Date(prev);p.setDate(p.getDate()+1);while(p.getDay()===0||p.getDay()===6)p.setDate(p.getDate()+1);run=(p.toISOString().slice(0,10)===dt.toISOString().slice(0,10))?run+1:1;}else run=1;best=Math.max(best,run);prev=dt;});S.streak=best;
+  S.shots=T.filter(t=>t.shot).length;S.stops=T.filter(t=>t.stop!=null).length;S.mistakes=T.filter(t=>(t.mistakes||'').trim()).length;
+  S.aGrade=T.filter(t=>/^A/i.test(t.grade||'')).length;S.setups=playbook.length;S.notes=notes.length;
+  S.rules=T.filter(t=>{const p=playbookFor(t);const r=p&&(p.rules||[]).filter(Boolean);return r&&r.length&&(t.rulesChecked||[]).length>=r.length;}).length;
+  S.clean=T.filter(t=>{const p=playbookFor(t);const r=p&&(p.rules||[]).filter(Boolean);return r&&r.length&&(t.rulesChecked||[]).length>=r.length&&!(t.mistakes||'').trim();}).length;
+  const mon={};T.forEach(t=>{if(!t.date)return;const m=t.date.slice(0,7);(mon[m]||(mon[m]={n:0,net:0})).n++;mon[m].net+=pnlOf(t);});S.greenMonths=Object.values(mon).filter(m=>m.n>=5&&m.net>0).length;
+  const days=Object.keys(dayNet).sort();let red=0;S.comeback=0;days.forEach(d=>{if(dayNet[d]<0)red++;else{if(dayNet[d]>0&&red>=3)S.comeback++;red=0;}});
+  const wk={};days.forEach(d=>{const dt=new Date(d+'T12:00');const th=new Date(dt);th.setDate(dt.getDate()+3-((dt.getDay()+6)%7));const k=th.getFullYear()+'-'+Math.ceil(((th-new Date(th.getFullYear(),0,1))/864e5+1)/7);wk[k]=(wk[k]||0)+dayNet[d];});
+  let gw=0,gwr=0;Object.keys(wk).sort((a,b)=>{const[ay,aw]=a.split('-').map(Number),[by,bw]=b.split('-').map(Number);return ay-by||aw-bw;}).forEach(k=>{gwr=wk[k]>0?gwr+1:0;gw=Math.max(gw,gwr);});S.greenWeeks=gw;
+  let gWin=0,gLoss=0;T.forEach(t=>{const p=pnlOf(t);if(p>0)gWin+=p;else gLoss-=p;});S.pf=gLoss?gWin/gLoss:(gWin?9:0);S.net=gWin-gLoss;
+  let ls=0,lsMax=0,daysNoTilt=0;days.forEach(d=>{const dayTr=T.filter(t=>t.date===d).sort((a,b)=>String(a.entryTime||'').localeCompare(String(b.entryTime||'')));let r=0,m=0;dayTr.forEach(t=>{if(pnlOf(t)<0){r++;m=Math.max(m,r);}else r=0;});if(m<3)daysNoTilt++;});S.noTilt=daysNoTilt;
+  S.mkt={};T.forEach(t=>{const k=mktOf(t.symbol);if(k)S.mkt[k]=(S.mkt[k]||0)+1;});
+  S.acct={};T.forEach(t=>{const k=acctKind(t.account);if(k)S.acct[k]=(S.acct[k]||0)+1;});
+  S.quick=0;S.intraday=0;S.swing=0;T.forEach(t=>{const a=tsOf(t.entryTime),b=tsOf(t.exitTime);if(!a||!b)return;const mins=(b-a)/6e4;if(mins>=0&&mins<=5)S.quick++;if(a.toDateString()===b.toDateString())S.intraday++;if(mins>=1440)S.swing++;});
+  S.recent30=T.slice(-30);let w30=0,l30=0;S.recent30.forEach(t=>{const p=pnlOf(t);if(p>0)w30+=p;else l30-=p;});S.pf30=S.recent30.length>=30?(l30?w30/l30:9):0;
+  return S;}
+
+const BI={cup:'<path d="M4 8h13v5a6 6 0 01-6 6H10a6 6 0 01-6-6V8z"/><path d="M17 10h1.5a2.5 2.5 0 010 5H17"/><path d="M8 2.5c0 1 1 1.5 1 2.5M12 2.5c0 1 1 1.5 1 2.5"/>',pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 15l2.5 2.5L16 13"/>',img:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',alert:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.5h.01"/>',layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',check:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12.5l3 3 5-6"/>',star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',up:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',back:'<path d="M3 12a9 9 0 109-9 9.5 9.5 0 00-6.7 2.8L3 8"/><path d="M3 3v5h5"/>',note:'<path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',cloud:'<path d="M17.5 19H8a5 5 0 11.9-9.9A6 6 0 0120 11.5a3.8 3.8 0 01-2.5 7.5z"/><path d="M9.5 14.5l2 2 3.5-4"/>',bars:'<path d="M5 20V10M10 20V4M15 20v-7M20 20V8"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',hour:'<path d="M6 2h12M6 22h12M7 2c0 5 5 6 5 10s-5 5-5 10M17 2c0 5-5 6-5 10s5 5 5 10"/>',wave:'<path d="M2 9c2.5-2 5-2 7.5 0s5 2 7.5 0 4-1.5 5 0M2 15c2.5-2 5-2 7.5 0s5 2 7.5 0 4-1.5 5 0"/>',calm:'<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M14.5 9a2.5 2 0 00-2.5-1.5c-1.4 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2A2.5 2 0 019.5 15M12 6v1.5M12 16.5V18"/>',crown:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/><path d="M5 19h14"/>',bean:'<ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(35 12 12)"/><path d="M8.5 17.5c2-3 5-7 7-11"/>',flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',greek:'<path d="M4 18c3 0 4-12 8-12 2 0 2.5 2 2.5 3.5S13 13 13 15s1 3 3 3 4-3 4-6"/>',chart:'<path d="M3 20h18"/><path d="M6 16V9M10 16V5M14 16v-6M18 16v-9"/>'};
+const bIcon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="19" height="19">${BI[k]||BI.star}</svg>`;
+// ----- badges -----
+const CB=(id,name,desc,icon,goal,val,o={})=>Object.assign({id,name,desc,icon,goal,val},o);
+function cremaBadges(){const S=profStats(),A=profAnswers()||{},mine=[],base=[];
+  const ladder=[['bean','Bean','Log your first 10 trades',10],['grinder','Grinder','Log 50 trades',50],['roaster','Roaster','Log 100 trades',100],['barista','Barista','Log 250 trades',250]];
+  ladder.forEach(([id,n,d,g])=>base.push(CB(id,n,d,'cup',g,S.n,{group:'Volume'})));
+  base.push(CB('first-pour','First pour','Write your first journal entry','pen',1,S.jdays,{group:'Journal'}));
+  base.push(CB('daily-grind','Daily grind','Journal on 20 different days','note',20,S.jdays,{group:'Journal'}));
+  base.push(CB('fresh-pot','Fresh pot','Show up 5 trading days in a row (a trade or a journal entry)','cal',5,S.streak,{group:'Habit'}));
+  base.push(CB('full-week','Full week, twice','Show up 10 trading days in a row','clock',10,S.streak,{group:'Habit'}));
+  base.push(CB('chart-keeper','Chart keeper','Attach a chart screenshot to 10 trades','img',10,S.shots,{group:'Review'}));
+  base.push(CB('stop-set','Risk defined','Set a stop on 25 trades so Crema can track R','shield',25,S.stops,{group:'Risk'}));
+  base.push(CB('honest-cup','Honest cup','Write down what went wrong on 10 trades','alert',10,S.mistakes,{group:'Review'}));
+  base.push(CB('house-blend','House blend','Build 3 setups in your playbook','layers',3,S.setups,{group:'Playbook'}));
+  base.push(CB('by-the-book','By the book','Check every playbook rule on 15 trades','check',15,S.rules,{group:'Playbook'}));
+  base.push(CB('a-grade','Top shelf','Grade 10 trades as A','star',10,S.aGrade,{group:'Review'}));
+  base.push(CB('green-month','Green month','Finish a month in profit (5+ trades)','up',1,S.greenMonths,{group:'Results'}));
+  base.push(CB('comeback','Comeback','A green day right after 3 red days','back',1,S.comeback,{group:'Results'}));
+  base.push(CB('notebook','Notebook','Keep 5 notes in your notebook','note',5,S.notes,{group:'Journal'}));
+  base.push(CB('backed-up','Backed up','Sign in so your journal syncs to your account','cloud',1,authUser?1:0,{group:'Account'}));
+  // For you: from your answers
+  const MK={futures:['Futures desk','Log 20 futures trades','bars'],forex:['Pip counter','Log 20 forex trades','globe'],stocks:['Tape reader','Log 20 stock trades','chart'],options:['Greeks in the cup','Log 20 options trades','greek'],crypto:['Around the clock','Log 20 crypto trades','coin']};
+  (A.markets||[]).forEach(m=>MK[m]&&mine.push(CB('mkt-'+m,MK[m][0],MK[m][1],MK[m][2],20,S.mkt[m]||0)));
+  const AC={paper:['Practice reps','Log 25 trades on a paper or sim account','Name the account “Paper” or “Sim” when you log.'],funded:['Challenge ready','Log 25 trades on your funded account','Name the account after your prop firm (e.g. “Apex 50k”).'],live:['Real money, real records','Log 25 trades on a live account','']};
+  (A.accounts||[]).forEach(k=>AC[k]&&mine.push(CB('acct-'+k,AC[k][0],AC[k][1],'target',25,S.acct[k]||0,{tip:AC[k][2]})));
+  if(A.style==='scalp')mine.push(CB('quick-hands','Quick hands','Log 20 trades held 5 minutes or less (add entry and exit times)','bolt',20,S.quick));
+  if(A.style==='day')mine.push(CB('flat-by-close','Flat by close','Log 30 trades opened and closed the same day (add times)','moon',30,S.intraday));
+  if(A.style==='swing')mine.push(CB('patient-hold','Patient hold','Log 10 trades held a day or longer (add times)','hour',10,S.swing));
+  if(A.goal==='consistency')mine.push(CB('steady-pour','Steady pour','4 green weeks in a row','wave',4,S.greenWeeks));
+  if(A.goal==='funded')mine.push(CB('no-tilt','No tilt','20 trading days without 3 losses in a row','calm',20,S.noTilt));
+  if(A.goal==='discipline')mine.push(CB('clean-cup','Clean cup','15 trades that follow every rule with no mistakes noted','check',15,S.clean));
+  if(A.goal==='grow')mine.push(CB('compounding','Compounding','Profit factor of 1.5+ over your last 30 trades','chart',1,S.pf30>=1.5?1:0,{prog:S.recent30.length<30?`${S.recent30.length}/30 trades`:`PF ${S.pf30.toFixed(2)}`}));
+  mine.forEach(b=>b.mine=true);
+  const founder=isFounder()?[CB('founder','Founder','Built Crema from the first line of code','crown',1,1),CB('first-cup','First cup','Crema’s first account, here since day one','bean',1,1),CB('head-roaster','Head roaster','Runs the roastery: every feature ships through you','flag',1,1)]:[];
+  founder.forEach(b=>b.founder=true);
+  return [...founder,...mine,...base].map(b=>Object.assign(b,{earned:b.val>=b.goal}));}
+
+// ----- profile page -----
+function profName(){const p=prof();return (p.name||'').trim()||(typeof displayName==='function'&&authUser?displayName():'')||'Trader';}
+function avatarHTML(cls){const p=prof();const n=profName();return p.avatar?`<span class="${cls}"><img src="${p.avatar}" alt=""></span>`:`<span class="${cls}">${esc(n.charAt(0).toUpperCase())}</span>`;}
+function renderProfile(){
+  $('subbar').innerHTML='';
+  const p=prof(),A=profAnswers(),B=cremaBadges(),got=B.filter(b=>b.earned),show=(p.showcase||[]).map(id=>B.find(b=>b.id===id&&b.earned)).filter(Boolean);
+  const lbl=(k,v)=>{const q=PQ.find(x=>x.k===k);const m=Object.fromEntries(q.opts);return Array.isArray(v)?v.map(x=>m[x]).filter(Boolean).join(', '):m[v]||'';};
+  const ans=A?PQ.map(q=>{const t=lbl(q.k,A[q.k]);return t?`<span class="pf-chip">${esc(t)}</span>`:'';}).join(''):'';
+  const card=b=>{const pct=Math.max(0,Math.min(100,Math.round(b.val/b.goal*100)));const prog=b.prog||(b.goal>1?`${Math.min(b.val,b.goal)}/${b.goal}`:'');
+    return `<div class="cbg${b.earned?' got':''}${b.mine?' mine':''}${b.founder?' fnd':''}" data-id="${b.id}" ${b.earned?'role="button" tabindex="0" title="Click to feature on your profile"':''}>
+      <div class="cbg-ic">${bIcon(b.icon)}</div><div class="cbg-tx"><div class="cbg-nm">${esc(b.name)}${b.mine?'<span class="cbg-for">For you</span>':''}${b.founder?'<span class="cbg-fd">Founder</span>':''}${(p.showcase||[]).includes(b.id)&&b.earned?'<span class="cbg-pin">Featured</span>':''}</div>
+      <div class="cbg-ds">${esc(b.desc)}</div>${b.tip&&!b.earned?`<div class="cbg-tip">${esc(b.tip)}</div>`:''}
+      ${b.earned?'<div class="cbg-done">Earned</div>':`<div class="cbg-bar"><i style="width:${pct}%"></i></div><div class="cbg-pg">${esc(prog)}</div>`}</div></div>`;};
+  const fnd=B.filter(b=>b.founder),mine=B.filter(b=>b.mine),rest=B.filter(b=>!b.mine&&!b.founder);const order=a=>[...a.filter(b=>b.earned),...a.filter(b=>!b.earned).sort((x,y)=>y.val/y.goal-x.val/x.goal)];
+  $('app').innerHTML=`<div class="pf-wrap">
+    <div class="card pf-head"><div class="pf-av-wrap">${avatarHTML('pf-av')}</div>
+      <div class="pf-main"><div class="pf-name">${esc(profName())}</div>${p.bio?`<div class="pf-bio">${esc(p.bio)}</div>`:'<div class="pf-bio muted">Add a short bio: what you trade and what you’re working on.</div>'}
+        <div class="pf-feat">${show.map(b=>`<span class="pf-fb" title="${esc(b.desc)}">${bIcon(b.icon)}${esc(b.name)}</span>`).join('')}</div>
+        <div class="pf-ans">${ans||''}<button class="btn sm" id="pfAns">${A?'Edit answers':'Answer 4 quick questions'}</button></div></div>
+      <div class="pf-side"><div class="pf-count"><b>${got.length}</b><span>of ${B.length} badges</span></div><button class="btn sm" id="pfEdit">Edit profile</button></div></div>
+    <div class="card pf-edit" id="pfEditBox" style="display:none"></div>
+    ${fnd.length?`<div class="card cbg-fcard"><div class="card-h"><h3>Founder</h3><span class="hint">Only you have these</span></div><div class="cbg-grid">${fnd.map(card).join('')}</div></div>`:''}
+    ${mine.length?`<div class="card"><div class="card-h"><h3>For you</h3><span class="hint">Picked from your answers</span></div><div class="cbg-grid">${order(mine).map(card).join('')}</div></div>`:(A?'':`<div class="card pf-nudge"><div><b>Get badges made for how you trade</b><div class="hint">Answer 4 quick questions and Crema adds badges for your markets, accounts, style and goal.</div></div><button class="btn primary sm" id="pfAns2">Answer now</button></div>`)}
+    <div class="card"><div class="card-h"><h3>Badges</h3><span class="hint">Click an earned badge to feature it (up to 3)</span></div><div class="cbg-grid">${order(rest).map(card).join('')}</div></div>
+  </div>`;
+  $('pfAns').onclick=()=>openQuestions(!!A);if($('pfAns2'))$('pfAns2').onclick=()=>openQuestions(false);
+  $('pfEdit').onclick=openProfileEdit;
+  document.querySelectorAll('.cbg.got').forEach(el=>{const tog=async()=>{const s=new Set(p.showcase||[]);if(s.has(el.dataset.id))s.delete(el.dataset.id);else{if(s.size>=3){await crAlert('You can feature up to 3 badges. Click a featured one to remove it first.');return;}s.add(el.dataset.id);}p.showcase=[...s];await saveSettings();renderProfile();renderAuthBtn();};el.onclick=tog;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}};});
+}
+function shrinkAvatar(file){return new Promise((res,rej)=>{if(!/^image\//.test(file.type))return rej(new Error('Pick an image file.'));const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const s=256,cv=document.createElement('canvas');cv.width=cv.height=s;const m=Math.min(img.width,img.height);cv.getContext('2d').drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,s,s);res(cv.toDataURL('image/jpeg',0.82));};img.onerror=()=>rej(new Error('That image couldn’t be read.'));img.src=r.result;};r.readAsDataURL(file);});}
+function openProfileEdit(){const p=prof(),box=$('pfEditBox');let photo=p.avatar||null;box.style.display='block';
+  box.innerHTML=`<div class="card-h"><h3>Edit profile</h3></div><div class="pf-form">
+    <div class="pf-photo"><span class="pf-av lg" id="peAv">${photo?`<img src="${photo}" alt="">`:esc(profName().charAt(0).toUpperCase())}</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn sm">Change photo<input type="file" id="peFile" accept="image/*" hidden></label>${photo?'<button class="btn sm" id="peDel">Remove</button>':''}</div></div>
+    <div class="field"><label>Display name</label><input type="text" id="peName" maxlength="40" value="${esc(p.name||(authUser?displayName():''))}"></div>
+    <div class="field"><label>Bio <span id="peCnt" style="text-transform:none;letter-spacing:0;color:var(--muted2)"></span></label><textarea id="peBio" rows="3" maxlength="200" placeholder="What you trade, your style, what you’re working on…">${esc(p.bio||'')}</textarea></div>
+    <div class="modal-foot" style="justify-content:flex-start;margin-top:4px"><button class="btn primary" id="peSave">Save</button><button class="btn" id="peCancel">Cancel</button><span class="hint" id="peMsg"></span></div></div>`;
+  const cnt=()=>$('peCnt').textContent=$('peBio').value.length+'/200';cnt();$('peBio').oninput=cnt;
+  $('peFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{photo=await shrinkAvatar(f);$('peAv').innerHTML=`<img src="${photo}" alt="">`;}catch(err){$('peMsg').textContent=err.message;}};
+  if($('peDel'))$('peDel').onclick=()=>{photo=null;$('peAv').textContent=($('peName').value||'T').charAt(0).toUpperCase();};
+  $('peCancel').onclick=()=>{box.style.display='none';};
+  $('peSave').onclick=async()=>{p.name=$('peName').value.trim().slice(0,40);p.bio=$('peBio').value.trim().slice(0,200);p.avatar=photo;await saveSettings();renderAuthBtn();renderProfile();};
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function openProfile(){$('authOverlay').classList.remove('open');$('settingsOverlay')&&$('settingsOverlay').classList.remove('open');setView('profile');window.scrollTo({top:0,behavior:'smooth'});}
 
 // Google's own sign-in button: keeps people on this site, so Google's screen names Crema's site instead of the database address.
 // If Google's script can't load, the older redirect button stays.
@@ -1114,6 +1316,7 @@ function setupAuth(){
     const {error}=await sb.auth.updateUser({password:p});if(error)return authMsg('resetMsg',friendlyAuthError(error));
     authMsg('resetMsg','Password updated — you’re signed in.','ok');setTimeout(()=>$('authOverlay').classList.remove('open'),1400);};
   $('syncNowBtn').onclick=async()=>{syncedFor=null;await onSignedIn(authUser);};
+  $('acctProfileBtn').onclick=openProfile;$('pqSave').onclick=saveQuestions;$('pqSkip').onclick=skipQuestions;
   $('signOutBtn').onclick=signOutFlow;$('acctUserSave').onclick=saveUsername;
   window.addEventListener('online',()=>{if(authUser&&dirty.size)pushDirty();});
   sb.auth.onAuthStateChange((event,session)=>{
@@ -1226,6 +1429,7 @@ function scoreCard(s){
 function setView(v){view=v;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v));render();}
 function filterToDate(date){range={mode:'custom',from:date,to:date};setView('trades');}
 function render(){
+  if(view==='profile'){renderProfile();return;}
   renderSubbar();
   if(view==='notebook'){renderNotebook();return;}
   if(view==='mistakes'){renderMistakes();return;}
@@ -2375,7 +2579,7 @@ async function seedSamples(){const base=Date.now()-12*864e5;
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 $('addBtn').onclick=()=>openTrade();
 $('closeTrade').onclick=closeTrade;$('cancelTrade').onclick=closeTrade;$('saveTrade').onclick=saveTrade;
-$('settingsBtn').onclick=openSettings;$('closeSettings').onclick=()=>$('settingsOverlay').classList.remove('open');$('saveSettings').onclick=saveSettingsForm;
+$('settingsBtn').onclick=openSettings;$('settingsProfileBtn').onclick=openProfile;$('closeSettings').onclick=()=>$('settingsOverlay').classList.remove('open');$('saveSettings').onclick=saveSettingsForm;
 $('exportBtn').onclick=exportCSV;$('backupBtn').onclick=backup;
 $('guideBtn').onclick=()=>openGuide('export');
 $('closeGuide').onclick=()=>$('guideOverlay').classList.remove('open');
